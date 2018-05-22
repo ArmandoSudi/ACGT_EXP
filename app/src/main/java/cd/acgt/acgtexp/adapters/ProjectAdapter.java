@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cd.acgt.acgtexp.Constant;
@@ -24,7 +23,7 @@ import cd.acgt.acgtexp.activites.ListActivity;
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
 
     Activity mActivity;
-    List<Projet> mProjets = new ArrayList<>();
+    List<Projet> mProjets;
 
     static class VH extends RecyclerView.ViewHolder {
         TextView nomTV;
@@ -43,7 +42,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
     @Override
     public void onBindViewHolder(VH holder, final int position) {
         final Projet projet = mProjets.get(position);
-        holder.nomTV.setText(projet.getNom());
+        holder.nomTV.setText(projet.getDesignation());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

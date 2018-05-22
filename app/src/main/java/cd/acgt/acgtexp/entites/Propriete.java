@@ -1,14 +1,43 @@
 package cd.acgt.acgtexp.entites;
 
-public class Propriete {
-    int codePropriete;
-    public String adresse;
-    public String urlPhoto1;
-    public String urlPhoto2;
-    public String urlPhoto3;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
+@Entity(tableName = "PROPRIETE")
+public class Propriete {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "CODE_PROPRIETE")
+    int codePropriete;
+    @NonNull
+    @ColumnInfo(name = "TYPE")
+    public String type;
+    @NonNull
+    @ColumnInfo(name = "ADRESSE")
+    public String adresse;
+    @ColumnInfo(name = "URL_PHOTO_1")
+    public String urlPhoto1;
+    @ColumnInfo(name = "URL_PHOTO_2")
+    public String urlPhoto2;
+    @ColumnInfo(name = "URL_PHOTO_3")
+    public String urlPhoto3;
+    @ColumnInfo(name = "CODE_RIVERAIN")
+    public int codeRiverain;
+    @ColumnInfo(name = "CODE_PROJET")
+    public String codeProjet;
+
+    @Ignore
     public Propriete(String adresse) {
         this.adresse = adresse;
+    }
+
+    public Propriete(@NonNull String type, @NonNull String adresse, String codeProjet) {
+        this.type = type;
+        this.adresse = adresse;
+        this.codeProjet = codeProjet;
     }
 
     public String getAdresse() {

@@ -1,26 +1,58 @@
 package cd.acgt.acgtexp.entites;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-//@Entity(tableName = "RIVERAIN")
+@Entity(tableName = "RIVERAIN")
 public class Riverain {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "CODE_RIVERAIN")
+    public int codeRiverrain;
+    @NonNull
+    @ColumnInfo(name = "NOM_COMPLET")
     public String nomComplet;
+    @NonNull
+    @ColumnInfo(name = "ADRESSE")
     public String adresse;
+    @NonNull
+    @ColumnInfo(name = "TELEPHONE")
     public String telephone;
+    @NonNull
+    @ColumnInfo(name = "EMAIL")
     public String email;
+    @NonNull
+    @ColumnInfo(name = "AUTRE_INFORMATION")
     public String autreInformation;
+    @NonNull
+    @ColumnInfo(name = "TYPE")
     public String type; // PM or PP
+    @NonNull
+    @ColumnInfo(name = "REPRESENTANT")
     public String representant; // Nullable
+    @NonNull
+    @ColumnInfo(name = "PIECE_IDENTITE")
     public String pieceIdentite;
+    @NonNull
+    @ColumnInfo(name = "NUMERO_PIECE_IDENTITE")
     public String numeroPieceIdentite;
+    @NonNull
+    @ColumnInfo(name = "URL_PIECE_IDENTITE")
     public String urlPieceIdentite;
+    @NonNull
+    @ColumnInfo(name = "RCCM")
     public String rccm;
+    @NonNull
+    @ColumnInfo(name = "NUMERO_IMPOT")
     public String numeroImpot;
 
-    public Riverain(String nomComplet, String adresse, String telephone) {
+    public Riverain(String nomComplet, String adresse, String telephone, String type) {
         this.nomComplet = nomComplet;
         this.adresse = adresse;
         this.telephone = telephone;
+        this.type = type;
     }
 
     public String getNomComplet() {

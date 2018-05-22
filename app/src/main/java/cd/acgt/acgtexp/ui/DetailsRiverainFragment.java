@@ -27,7 +27,7 @@ public class DetailsRiverainFragment extends Fragment {
      * @return A new instance of fragment DetailsRiverainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailsRiverainFragment newInstance(String param1, String param2) {
+    public static DetailsRiverainFragment newInstance() {
         DetailsRiverainFragment fragment = new DetailsRiverainFragment();
         return fragment;
     }

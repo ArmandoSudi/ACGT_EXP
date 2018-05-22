@@ -14,6 +14,7 @@ import java.util.List;
 
 import cd.acgt.acgtexp.Constant;
 import cd.acgt.acgtexp.R;
+import cd.acgt.acgtexp.activites.BaseDetailActivity;
 import cd.acgt.acgtexp.activites.ListActivity;
 import cd.acgt.acgtexp.entites.Projet;
 import cd.acgt.acgtexp.entites.Propriete;
@@ -24,7 +25,7 @@ import cd.acgt.acgtexp.entites.Propriete;
 public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> {
 
     Activity mActivity;
-    List<Propriete> mProprietes = new ArrayList<>();
+    List<Propriete> mProprietes;
 
     public static class VH extends RecyclerView.ViewHolder {
         TextView adresseTV;
@@ -49,8 +50,9 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
             @Override
             public void onClick(View v) {
                 Toast.makeText(mActivity, "position: " + position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mActivity, ListActivity.class);
+                Intent intent = new Intent(mActivity, BaseDetailActivity.class);
                 intent.putExtra(Constant.KEY_CODE_PROJECT, propriete.getCodePropriete());
+                intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
                 mActivity.startActivity(intent);
             }
         });
