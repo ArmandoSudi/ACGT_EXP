@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import cd.acgt.acgtexp.R;
@@ -19,6 +21,7 @@ import cd.acgt.acgtexp.adapters.ProjectAdapter;
 import cd.acgt.acgtexp.database.AcgtExpDatabase;
 import cd.acgt.acgtexp.entites.Projet;
 import cd.acgt.acgtexp.entites.Propriete;
+import cd.acgt.acgtexp.entites.Riverain;
 
 public class ProjectsActivity extends AppCompatActivity {
 
@@ -44,10 +47,10 @@ public class ProjectsActivity extends AppCompatActivity {
     public List<Projet> populateProjet(){
         List<Projet> projets = new ArrayList<>();
 
-        projets.add(new Projet("Autoroute Aeoroport"));
-        projets.add(new Projet("Matadi - Kinshasa "));
-        projets.add(new Projet("Bukavu - kamanyola"));
-        projets.add(new Projet("Tramway kinshasa"));
+        projets.add(new Projet("Autoroute Aeoroport", new Date(), new Date(), new Date()));
+        projets.add(new Projet("Matadi - Kinshasa ", new Date(), new Date(), new Date()));
+        projets.add(new Projet("Bukavu - kamanyola", new Date(), new Date(), new Date()));
+        projets.add(new Projet("Tramway kinshasa", new Date(), new Date(), new Date()));
 
         return projets;
     }
@@ -67,7 +70,7 @@ public class ProjectsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_test) {
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Testing DB", Toast.LENGTH_SHORT).show();
             testDB();
         }
 
@@ -78,10 +81,30 @@ public class ProjectsActivity extends AppCompatActivity {
         (new AsyncTask<Void, Void, long[]>() {
             @Override
             protected long[] doInBackground(Void... voids) {
-                Propriete propriete = new Propriete("batis", "Av nguma no 4", "1001");
 
-                long[] rows = AcgtExpDatabase.getInstance().getIProprieteDao().insert(propriete);
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, 2018);
+                cal.set(Calendar.MONTH, 10);
+                cal.set(Calendar.DAY_OF_MONTH, 10);
+                Date date = cal.getTime();
+
+                Propriete propriete = new Propriete("Av Nguma", "batis", "url one", "url two", "url three",  1, "1001" );
+                Projet projet = new Projet("Projet 1", date, date, date);
+                projet.setReceptionDefinitive(date);
+                projet.setReceptionProvisoire(date);
+                projet.setCodeProjet("1001");
+                Riverain riverain = new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",
+                        "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456");
+
+                long[] rowPropriete = AcgtExpDatabase.getInstance().getIProprieteDao().insert(propriete);
+                long[] rowProjet = AcgtExpDatabase.getInstance().getIProjetDao().insert(projet);
+                long[] rowRiverain = AcgtExpDatabase.getInstance().getIRiverainDao().insert(riverain);
+
+                long[] rows = {rowPropriete[0], rowProjet[0], rowRiverain[0]};
+
                 AcgtExpDatabase.getInstance().getIProprieteDao().deleteAll();
+                AcgtExpDatabase.getInstance().getIProjetDao().deleteAll();
+                AcgtExpDatabase.getInstance().getIRiverainDao().deleteAll();
 
                 return rows;
             }
@@ -90,9 +113,10 @@ public class ProjectsActivity extends AppCompatActivity {
             protected void onPostExecute(long[] aLong) {
                 super.onPostExecute(aLong);
 
-                Log.e(TAG, "onPostExecute: " + aLong[0] );
                 Log.e(TAG, "onPostExecute: " + aLong.length );
-//                Log.e(TAG, "onPostExecute: " + aLong );
+                Log.e(TAG, "onPostExecute: " + aLong[0] );
+                Log.e(TAG, "onPostExecute: " + aLong[1] );
+                Log.e(TAG, "onPostExecute: " + aLong[2] );
             }
         }).execute();
     }

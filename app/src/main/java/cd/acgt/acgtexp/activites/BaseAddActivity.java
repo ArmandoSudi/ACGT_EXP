@@ -12,6 +12,8 @@ import cd.acgt.acgtexp.ui.AddRiverainFragment;
 
 public class BaseAddActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,14 +23,27 @@ public class BaseAddActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int type = intent.getIntExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
+        String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
         switch(type) {
             case Constant.PROPRIETE_TYPE:
+                try {
+                    getSupportActionBar().setTitle("Ajouter une Propriete");
+                } catch (NullPointerException exception){
+                    exception.printStackTrace();
+                }
+
                 fragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, AddProprieteFragment.newInstance()).commit();
+                        .add(R.id.fragment_container, AddProprieteFragment.newInstance(codeProjet)).commit();
                 break;
             case Constant.RIVERAIN_TYPE:
+                try {
+                    getSupportActionBar().setTitle("Ajouter un Riverain");
+                } catch (NullPointerException exception) {
+                    exception.printStackTrace();
+                }
+
                 fragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, AddRiverainFragment.newInstance()).commit();
+                        .add(R.id.fragment_container, AddRiverainFragment.newInstance(codeProjet)).commit();
                 break;
         }
     }

@@ -17,4 +17,50 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="headline_style">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@fonts/font_family_regular</item>
+        <item name="android:textColor">#DE000000</item>
+    </style>
+
+    <style name="title_style">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@fonts/font_family_medium</item>
+        <item name="android:textColor">#DE000000</item>
+    </style>
+
+    <style name="subheading_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@fonts/font_family_regular</item>
+        <item name="android:textColor">#DE000000</item>
+    </style>
+
+    <style name="body_style_one">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@fonts/font_family_regular</item>
+        <item name="android:textColor">#DE000000</item>
+    </style>
+
+    <style name="body_style_two">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@fonts/font_family_medium</item>
+        <item name="android:textColor">#B3000000</item>
+    </style>
+
+    <style name="button_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@fonts/font_family_medium</item>
+        <item name="android:textColor">#DE000000</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="card_heading">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@fonts/font_family_regular</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#0098cb</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+
 </resources>

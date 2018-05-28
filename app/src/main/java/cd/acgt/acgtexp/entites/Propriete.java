@@ -29,14 +29,13 @@ public class Propriete {
     @ColumnInfo(name = "CODE_PROJET")
     public String codeProjet;
 
-    @Ignore
-    public Propriete(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public Propriete(@NonNull String type, @NonNull String adresse, String codeProjet) {
+    public Propriete(@NonNull String type, @NonNull String adresse, String urlPhoto1, String urlPhoto2, String urlPhoto3, int codeRiverain, String codeProjet) {
         this.type = type;
         this.adresse = adresse;
+        this.urlPhoto1 = urlPhoto1;
+        this.urlPhoto2 = urlPhoto2;
+        this.urlPhoto3 = urlPhoto3;
+        this.codeRiverain = codeRiverain;
         this.codeProjet = codeProjet;
     }
 

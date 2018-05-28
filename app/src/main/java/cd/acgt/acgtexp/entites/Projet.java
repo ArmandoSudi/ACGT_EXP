@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by Sugar on 5/18/2018
  */
 
-@Entity(tableName = "PROJECT")
+@Entity(tableName = "PROJET")
 public class Projet {
     @PrimaryKey()
     @NonNull
@@ -51,8 +51,11 @@ public class Projet {
     @ColumnInfo(name = "CONTEXTE")
     public String contexte;
 
-    public Projet(String designation) {
+    public Projet(@NonNull String designation, Date dateSignatureContrat, Date dateDemarrage, Date dateFinPrevue) {
         this.designation = designation;
+        this.dateSignatureContrat = dateSignatureContrat;
+        this.dateDemarrage = dateDemarrage;
+        this.dateFinPrevue = dateFinPrevue;
     }
 
     public String getDesignation() {

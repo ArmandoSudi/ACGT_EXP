@@ -27,7 +27,7 @@ import cd.acgt.acgtexp.entites.Propriete;
  */
 public class ProprieteListFragment extends Fragment {
 
-    private int mCodeProjet;
+    private String mCodeProjet;
     private ProprieteAdapter mProprieteAdapter;
 
 
@@ -43,10 +43,10 @@ public class ProprieteListFragment extends Fragment {
      * @return A new instance of fragment ProprieteListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProprieteListFragment newInstance(int codeProject) {
+    public static ProprieteListFragment newInstance(String codeProject) {
         ProprieteListFragment fragment = new ProprieteListFragment();
         Bundle args = new Bundle();
-        args.putInt(Constant.KEY_CODE_PROJECT, codeProject);
+        args.putString(Constant.KEY_CODE_PROJECT, codeProject);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +55,7 @@ public class ProprieteListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mCodeProjet = getArguments().getInt(Constant.KEY_CODE_PROJECT);
+            mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
         }
         mProprieteAdapter = new ProprieteAdapter(getActivity(), populatePropriete());
     }
@@ -77,10 +77,7 @@ public class ProprieteListFragment extends Fragment {
 
     List<Propriete> populatePropriete() {
         List<Propriete> proprietes = new ArrayList<>();
-        proprietes.add(new Propriete("Av de la sience, GOMBE"));
-        proprietes.add(new Propriete("Av de la paix, LINGUALA"));
-        proprietes.add(new Propriete("Av de Kangela, Mont Ngafula"));
-        proprietes.add(new Propriete("Av de l'OUA, NGALIEMA"));
+        proprietes.add(new Propriete("Av de la sience, GOMBE", "batis", "url one", "url two", "url three",  1, "1001"));
 
         return proprietes;
     }

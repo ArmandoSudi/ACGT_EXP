@@ -27,14 +27,6 @@ import cd.acgt.acgtexp.ui.ProprieteListFragment;
 
 public class ListActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -49,15 +41,21 @@ public class ListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Getting the codeProjet in order to pass it to the propriete/riverain when creating the
+        // fragment
+        Intent intent = getIntent();
+        final String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), codeProjet);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -73,11 +71,13 @@ public class ListActivity extends AppCompatActivity {
                     case 0:
                         // riverrain
                         intent.putExtra(Constant.KEY_TYPE, Constant.RIVERAIN_TYPE);
+                        intent.putExtra(codeProjet, Constant.KEY_CODE_PROJECT);
                         startActivity(intent);
                         break;
                     case 1:
                         // propriete
                         intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
+                        intent.putExtra(codeProjet, Constant.KEY_CODE_PROJECT);
                         startActivity(intent);
                         break;
                 }
@@ -116,19 +116,22 @@ public class ListActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        String mCodeProjet;
+
+        public SectionsPagerAdapter(FragmentManager fm, String codeProjet) {
             super(fm);
+            this.mCodeProjet = codeProjet;
         }
 
         @Override
         public Fragment getItem(int position) {
             switch(position){
                 case 0:
-                    return RiverainListFragment.newInstance(100);
+                    return RiverainListFragment.newInstance(mCodeProjet);
                 case 1:
-                    return ProprieteListFragment.newInstance(200);
+                    return ProprieteListFragment.newInstance(mCodeProjet);
                 default:
-                    return RiverainListFragment.newInstance(100);
+                    return RiverainListFragment.newInstance(mCodeProjet);
             }
         }
 

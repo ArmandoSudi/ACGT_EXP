@@ -6,6 +6,21 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- SPINNERS ENTRIES -->
+    <string-array name="type_propriete">
+        <item>Batis</item>
+        <item>Mur de cloture</item>
+        <item>Parcelle</item>
+    </string-array>
+    <string-array name="type_riverrain">
+        <item>Personne Morale</item>
+        <item>Personne Physique</item>
+    </string-array>
+    <string-array name="type_piece_identite">
+        <item>Carte electeur</item>
+        <item>Passport</item>
+        <item></item>
+    </string-array>
+    
+    
 </resources>

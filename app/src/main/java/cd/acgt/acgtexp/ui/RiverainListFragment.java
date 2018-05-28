@@ -26,7 +26,7 @@ import cd.acgt.acgtexp.entites.Riverain;
  */
 public class RiverainListFragment extends Fragment {
 
-    private int mCodeProject;
+    private String mCodeProject;
     RiverainAdapter mRiverainAdapter;
 
 
@@ -42,10 +42,10 @@ public class RiverainListFragment extends Fragment {
      * @return A new instance of fragment RiverainListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RiverainListFragment newInstance(int codeProjet) {
+    public static RiverainListFragment newInstance(String codeProjet) {
         RiverainListFragment fragment = new RiverainListFragment();
         Bundle args = new Bundle();
-        args.putInt(Constant.KEY_CODE_PROJECT, codeProjet);
+        args.putString(Constant.KEY_CODE_PROJECT, codeProjet);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,7 +54,7 @@ public class RiverainListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mCodeProject = getArguments().getInt(Constant.KEY_CODE_PROJECT);
+            mCodeProject = getArguments().getString(Constant.KEY_CODE_PROJECT);
         }
 
         mRiverainAdapter = new RiverainAdapter(getActivity(), populateRiverain());
@@ -77,12 +77,10 @@ public class RiverainListFragment extends Fragment {
 
     List<Riverain> populateRiverain() {
         List<Riverain> riverains = new ArrayList<>();
-        riverains.add(new Riverain("John Doe", "Av du fleuve numero 4", "0999999999", "Personne physique"));
-        riverains.add(new Riverain("John Doe", "Av du fleuve numero 4", "0999999999", "Personne physique"));
-        riverains.add(new Riverain("John Doe", "Av du fleuve numero 4", "0999999999", "Personne physique"));
-        riverains.add(new Riverain("John Doe", "Av du fleuve numero 4", "0999999999", "Personne physique"));
-        riverains.add(new Riverain("John Doe", "Av du fleuve numero 4", "0999999999", "Personne physique"));
-        riverains.add(new Riverain("John Doe", "Av du fleuve numero 4", "0999999999", "Personne physique"));
+        riverains.add(new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",
+                "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456"));
+        riverains.add(new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",
+                "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456"));
 
         return riverains;
     }

@@ -48,11 +48,19 @@ public class Riverain {
     @ColumnInfo(name = "NUMERO_IMPOT")
     public String numeroImpot;
 
-    public Riverain(String nomComplet, String adresse, String telephone, String type) {
+    public Riverain(@NonNull String nomComplet, @NonNull String adresse, @NonNull String telephone, @NonNull String email, @NonNull String autreInformation, @NonNull String type, @NonNull String representant, @NonNull String pieceIdentite, @NonNull String numeroPieceIdentite, @NonNull String urlPieceIdentite, @NonNull String rccm, @NonNull String numeroImpot) {
         this.nomComplet = nomComplet;
         this.adresse = adresse;
         this.telephone = telephone;
+        this.email = email;
+        this.autreInformation = autreInformation;
         this.type = type;
+        this.representant = representant;
+        this.pieceIdentite = pieceIdentite;
+        this.numeroPieceIdentite = numeroPieceIdentite;
+        this.urlPieceIdentite = urlPieceIdentite;
+        this.rccm = rccm;
+        this.numeroImpot = numeroImpot;
     }
 
     public String getNomComplet() {
