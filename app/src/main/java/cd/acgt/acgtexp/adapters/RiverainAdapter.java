@@ -24,7 +24,7 @@ import cd.acgt.acgtexp.entites.Riverain;
 public class RiverainAdapter extends RecyclerView.Adapter<RiverainAdapter.VH> {
 
     Activity mActivity;
-    List<Riverain> mRiverains;
+    List<Riverain> mRiverains = new ArrayList<>();
 
     public static class VH extends RecyclerView.ViewHolder {
         TextView nomTV, typeTV;
@@ -36,9 +36,8 @@ public class RiverainAdapter extends RecyclerView.Adapter<RiverainAdapter.VH> {
         }
     }
 
-    public RiverainAdapter(Activity activity, List<Riverain> riverains)  {
+    public RiverainAdapter(Activity activity)  {
         this.mActivity = activity;
-        this.mRiverains = riverains;
     }
 
     @Override
@@ -70,5 +69,13 @@ public class RiverainAdapter extends RecyclerView.Adapter<RiverainAdapter.VH> {
     @Override
     public int getItemCount() {
         return mRiverains.size();
+    }
+
+    public void addAll(List<Riverain> riverains) {
+        mRiverains.addAll(riverains);
+    }
+
+    public void clear() {
+        mRiverains.clear();
     }
 }

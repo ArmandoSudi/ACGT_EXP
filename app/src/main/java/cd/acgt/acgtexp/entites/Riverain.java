@@ -2,10 +2,13 @@ package cd.acgt.acgtexp.entites;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "RIVERAIN")
+@Entity(tableName = "RIVERAIN", foreignKeys = {
+        @ForeignKey(entity = Projet.class, parentColumns = "CODE_PROJET", childColumns = "CODE_PROJET")
+})
 public class Riverain {
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -47,8 +50,11 @@ public class Riverain {
     @NonNull
     @ColumnInfo(name = "NUMERO_IMPOT")
     public String numeroImpot;
+    @NonNull
+    @ColumnInfo(name = "CODE_PROJET")
+    public String codeProjet;
 
-    public Riverain(@NonNull String nomComplet, @NonNull String adresse, @NonNull String telephone, @NonNull String email, @NonNull String autreInformation, @NonNull String type, @NonNull String representant, @NonNull String pieceIdentite, @NonNull String numeroPieceIdentite, @NonNull String urlPieceIdentite, @NonNull String rccm, @NonNull String numeroImpot) {
+    public Riverain(@NonNull String nomComplet, @NonNull String adresse, @NonNull String telephone, @NonNull String email, @NonNull String autreInformation, @NonNull String type, @NonNull String representant, @NonNull String pieceIdentite, @NonNull String numeroPieceIdentite, @NonNull String urlPieceIdentite, @NonNull String rccm, @NonNull String numeroImpot, @NonNull String codeProjet) {
         this.nomComplet = nomComplet;
         this.adresse = adresse;
         this.telephone = telephone;
@@ -61,6 +67,7 @@ public class Riverain {
         this.urlPieceIdentite = urlPieceIdentite;
         this.rccm = rccm;
         this.numeroImpot = numeroImpot;
+        this.codeProjet = codeProjet;
     }
 
     public String getNomComplet() {

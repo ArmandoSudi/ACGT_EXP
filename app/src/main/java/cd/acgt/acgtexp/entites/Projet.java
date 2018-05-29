@@ -51,11 +51,14 @@ public class Projet {
     @ColumnInfo(name = "CONTEXTE")
     public String contexte;
 
-    public Projet(@NonNull String designation, Date dateSignatureContrat, Date dateDemarrage, Date dateFinPrevue) {
+    public Projet(@NonNull String codeProjet, @NonNull String designation, Date dateSignatureContrat, Date dateDemarrage, Date dateFinPrevue, Date receptionProvisoire, Date receptionDefinitive) {
+        this.codeProjet = codeProjet;
         this.designation = designation;
         this.dateSignatureContrat = dateSignatureContrat;
         this.dateDemarrage = dateDemarrage;
         this.dateFinPrevue = dateFinPrevue;
+        this.receptionProvisoire = receptionProvisoire;
+        this.receptionDefinitive = receptionDefinitive;
     }
 
     public String getDesignation() {

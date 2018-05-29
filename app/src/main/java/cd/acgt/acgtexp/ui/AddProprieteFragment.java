@@ -42,6 +42,7 @@ public class AddProprieteFragment extends Fragment {
         AddProprieteFragment fragment = new AddProprieteFragment();
         Bundle args = new Bundle();
         args.putString(Constant.KEY_CODE_PROJECT, codeProjet);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -103,7 +104,7 @@ public class AddProprieteFragment extends Fragment {
         String urlTwo = "url two";
         String urlThree = "url three";
 
-        return new Propriete(adresse, mTypePropriete, urlOne, urlTwo, urlThree, 1, mCodeProjet );
+        return new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet );
     }
 
     public void savePropriete() {

@@ -17,15 +17,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Proprietaire "
-                style="@style/body_style_one"/>
+                android:text="Proprietaire :"
+                style="@style/headline_style"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
                 android:text="John Doe"
-                style="@style/body_style_two"/>
+                style="@style/headline_style"/>
         </TableRow>
         <TableRow
             android:paddingTop="8dp">

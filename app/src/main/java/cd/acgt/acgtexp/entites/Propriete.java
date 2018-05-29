@@ -2,11 +2,14 @@ package cd.acgt.acgtexp.entites;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "PROPRIETE")
+@Entity(tableName = "PROPRIETE", foreignKeys = {
+        @ForeignKey(entity = Projet.class, parentColumns = "CODE_PROJET", childColumns = "CODE_PROJET")
+})
 public class Propriete {
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -49,6 +52,19 @@ public class Propriete {
 
     public void setCodePropriete(int codePropriete) {
         this.codePropriete = codePropriete;
+    }
+
+    @NonNull
+    public String getType() {
+        return type;
+    }
+
+    public int getCodeRiverain() {
+        return codeRiverain;
+    }
+
+    public String getCodeProjet() {
+        return codeProjet;
     }
 
     public void setAdresse(String adresse) {

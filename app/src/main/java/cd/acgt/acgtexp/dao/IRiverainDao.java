@@ -7,6 +7,8 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
 import cd.acgt.acgtexp.entites.Riverain;
 
 /**
@@ -23,6 +25,9 @@ public interface IRiverainDao {
 
     @Delete
     void delete(Riverain...riverain);
+
+    @Query("SELECT * FROM RIVERAIN WHERE CODE_PROJET=:codeProjet")
+    List<Riverain> getRiverainByProjet(String codeProjet);
 
     @Query("DELETE FROM RIVERAIN")
     void deleteAll();

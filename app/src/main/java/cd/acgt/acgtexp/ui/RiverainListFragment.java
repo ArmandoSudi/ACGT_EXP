@@ -1,6 +1,7 @@
 package cd.acgt.acgtexp.ui;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,6 +18,7 @@ import java.util.List;
 import cd.acgt.acgtexp.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.adapters.RiverainAdapter;
+import cd.acgt.acgtexp.database.AcgtExpDatabase;
 import cd.acgt.acgtexp.entites.Riverain;
 
 /**
@@ -57,7 +59,16 @@ public class RiverainListFragment extends Fragment {
             mCodeProject = getArguments().getString(Constant.KEY_CODE_PROJECT);
         }
 
-        mRiverainAdapter = new RiverainAdapter(getActivity(), populateRiverain());
+        mRiverainAdapter = new RiverainAdapter(getActivity());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mRiverainAdapter != null) {
+            mRiverainAdapter.clear();
+        }
+        new LoadRiverrainAsyncTask(mRiverainAdapter, mCodeProject).execute();
     }
 
     @Override
@@ -75,14 +86,26 @@ public class RiverainListFragment extends Fragment {
         return view;
     }
 
-    List<Riverain> populateRiverain() {
-        List<Riverain> riverains = new ArrayList<>();
-        riverains.add(new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",
-                "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456"));
-        riverains.add(new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",
-                "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456"));
+    static class LoadRiverrainAsyncTask extends AsyncTask<Void, Void, List<Riverain>> {
+        RiverainAdapter riverainAdapter;
+        String codeProjet;
 
-        return riverains;
+        public LoadRiverrainAsyncTask(RiverainAdapter riverainAdapter, String codeProjet) {
+            this.riverainAdapter = riverainAdapter;
+            this.codeProjet = codeProjet;
+        }
+
+        @Override
+        protected void onPostExecute(List<Riverain> riverains) {
+            super.onPostExecute(riverains);
+            riverainAdapter.addAll(riverains);
+            riverainAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected List<Riverain> doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIRiverainDao().getRiverainByProjet(codeProjet);
+        }
     }
 
 }

@@ -7,6 +7,8 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
 import cd.acgt.acgtexp.entites.Propriete;
 
 /**
@@ -23,6 +25,9 @@ public interface IProprieteDAo {
 
     @Delete
     void delete(Propriete...propriete);
+
+    @Query("SELECT * FROM PROPRIETE WHERE CODE_PROJET=:codeProjet")
+    List<Propriete> getProprieteByProjet(String codeProjet);
 
     @Query("DELETE FROM PROPRIETE")
     void deleteAll();

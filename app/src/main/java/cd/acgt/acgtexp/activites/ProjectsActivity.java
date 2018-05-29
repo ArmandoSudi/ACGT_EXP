@@ -27,6 +27,17 @@ public class ProjectsActivity extends AppCompatActivity {
 
     private static final String TAG = "ProjectsActivity";
 
+    ProjectAdapter mProjetcAdapter;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new LoadProjectAsyncTask(mProjetcAdapter).execute();
+        if (mProjetcAdapter != null) {
+            mProjetcAdapter.clear();
+            mProjetcAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +47,36 @@ public class ProjectsActivity extends AppCompatActivity {
         AcgtExpDatabase.getDatabase(this);
 
         RecyclerView projetRV = findViewById(R.id.projet_rv);
-        ProjectAdapter projetAdatper = new ProjectAdapter(this, populateProjet());
+        mProjetcAdapter = new ProjectAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false );
         projetRV.setLayoutManager(linearLayoutManager);
         projetRV.setHasFixedSize(true);
         projetRV.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
-        projetRV.setAdapter(projetAdatper);
+        projetRV.setAdapter(mProjetcAdapter);
     }
 
-    public List<Projet> populateProjet(){
-        List<Projet> projets = new ArrayList<>();
+    public void populateProjet(){
+        (new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<Projet> projets = new ArrayList<>();
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, 2018);
+                cal.set(Calendar.MONTH, 10);
+                cal.set(Calendar.DAY_OF_MONTH, 10);
+                Date date = cal.getTime();
 
-        projets.add(new Projet("Autoroute Aeoroport", new Date(), new Date(), new Date()));
-        projets.add(new Projet("Matadi - Kinshasa ", new Date(), new Date(), new Date()));
-        projets.add(new Projet("Bukavu - kamanyola", new Date(), new Date(), new Date()));
-        projets.add(new Projet("Tramway kinshasa", new Date(), new Date(), new Date()));
+                projets.add(new Projet("1002","Autoroute Aeoroport", date, date, date,date, date));
+                projets.add(new Projet("1003","Matadi - Kinshasa ", date, date, date, date, date));
+                projets.add(new Projet("1004","Bukavu - kamanyola", date, date, date, date, date));
+                projets.add(new Projet("1005","Tramway kinshasa", date, date, date, date, date));
 
-        return projets;
+                for (Projet projet : projets) {
+                    AcgtExpDatabase.getInstance().getIProjetDao().insert(projet);
+                }
+                return null;
+            }
+        }).execute();
     }
 
     @Override
@@ -70,8 +94,9 @@ public class ProjectsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_test) {
-            Toast.makeText(this, "Testing DB", Toast.LENGTH_SHORT).show();
-            testDB();
+            populateProjet();
+        } else if (id == R.id.action_clear) {
+            new LoadProjectAsyncTask(mProjetcAdapter).execute();
         }
 
         return super.onOptionsItemSelected(item);
@@ -89,12 +114,10 @@ public class ProjectsActivity extends AppCompatActivity {
                 Date date = cal.getTime();
 
                 Propriete propriete = new Propriete("Av Nguma", "batis", "url one", "url two", "url three",  1, "1001" );
-                Projet projet = new Projet("Projet 1", date, date, date);
-                projet.setReceptionDefinitive(date);
-                projet.setReceptionProvisoire(date);
+                Projet projet = new Projet("1001","Projet 1", date, date, date, date, date);
                 projet.setCodeProjet("1001");
                 Riverain riverain = new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",
-                        "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456");
+                        "PM", "pas de rep", "Passeport", "1111", "www.google.com", "rccm", "123456", "1001");
 
                 long[] rowPropriete = AcgtExpDatabase.getInstance().getIProprieteDao().insert(propriete);
                 long[] rowProjet = AcgtExpDatabase.getInstance().getIProjetDao().insert(projet);
@@ -119,5 +142,27 @@ public class ProjectsActivity extends AppCompatActivity {
                 Log.e(TAG, "onPostExecute: " + aLong[2] );
             }
         }).execute();
+    }
+
+    static class LoadProjectAsyncTask extends AsyncTask<Void, Void, List<Projet>> {
+
+        ProjectAdapter projectAdapter;
+
+        public LoadProjectAsyncTask(ProjectAdapter projectAdapter) {
+            this.projectAdapter = projectAdapter;
+        }
+
+        @Override
+        protected void onPostExecute(List<Projet> projets) {
+            super.onPostExecute(projets);
+            projectAdapter.addProjets(projets);
+            projectAdapter.notifyDataSetChanged();
+
+        }
+
+        @Override
+        protected List<Projet> doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIProjetDao().getAll();
+        }
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cd.acgt.acgtexp.Constant;
@@ -23,7 +24,7 @@ import cd.acgt.acgtexp.activites.ListActivity;
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
 
     Activity mActivity;
-    List<Projet> mProjets;
+    List<Projet> mProjets = new ArrayList<>();
 
     static class VH extends RecyclerView.ViewHolder {
         TextView nomTV;
@@ -34,9 +35,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
         }
     }
 
-    public ProjectAdapter(Activity activity, List<Projet> projets){
+    public ProjectAdapter(Activity activity){
         this.mActivity = activity;
-        this.mProjets = projets;
     }
 
     @Override
@@ -47,9 +47,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity, "position: " + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mActivity, ListActivity.class);
                 intent.putExtra(Constant.KEY_CODE_PROJECT, projet.getCodeProjet());
+                Toast.makeText(mActivity, "CODE :" + projet.getCodeProjet(), Toast.LENGTH_SHORT).show();
                 mActivity.startActivity(intent);
             }
         });
@@ -61,6 +61,14 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
                 .inflate(R.layout.projet_item, parent, false);
 
         return new VH(view);
+    }
+
+    public void addProjets(List<Projet> projets) {
+        mProjets.addAll(projets);
+    }
+
+    public void clear() {
+        mProjets.clear();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package cd.acgt.acgtexp.ui;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +19,7 @@ import java.util.PropertyPermission;
 import cd.acgt.acgtexp.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.adapters.ProprieteAdapter;
+import cd.acgt.acgtexp.database.AcgtExpDatabase;
 import cd.acgt.acgtexp.entites.Propriete;
 
 /**
@@ -57,7 +59,16 @@ public class ProprieteListFragment extends Fragment {
         if (getArguments() != null) {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
         }
-        mProprieteAdapter = new ProprieteAdapter(getActivity(), populatePropriete());
+        mProprieteAdapter = new ProprieteAdapter(getActivity());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mProprieteAdapter !=  null) {
+            mProprieteAdapter.clear();
+        }
+        new LoadProprieteAsyncTask(mProprieteAdapter, mCodeProjet).execute();
     }
 
     @Override
@@ -75,11 +86,26 @@ public class ProprieteListFragment extends Fragment {
         return view;
     }
 
-    List<Propriete> populatePropriete() {
-        List<Propriete> proprietes = new ArrayList<>();
-        proprietes.add(new Propriete("Av de la sience, GOMBE", "batis", "url one", "url two", "url three",  1, "1001"));
+    static class LoadProprieteAsyncTask extends AsyncTask<Void, Void, List<Propriete>> {
+        ProprieteAdapter proprieteAdapter;
+        String codeProjet;
 
-        return proprietes;
+        public LoadProprieteAsyncTask(ProprieteAdapter proprieteAdapter, String codeProjet) {
+            this.proprieteAdapter = proprieteAdapter;
+            this.codeProjet = codeProjet;
+        }
+
+        @Override
+        protected void onPostExecute(List<Propriete> proprietes) {
+            super.onPostExecute(proprietes);
+            proprieteAdapter.addAll(proprietes);
+            proprieteAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected List<Propriete> doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIProprieteDao().getProprieteByProjet(codeProjet);
+        }
     }
 
 }

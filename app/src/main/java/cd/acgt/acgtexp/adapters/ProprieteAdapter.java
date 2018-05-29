@@ -28,23 +28,26 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
     List<Propriete> mProprietes;
 
     public static class VH extends RecyclerView.ViewHolder {
-        TextView adresseTV;
+        TextView adresseTV, proprietaireTV, typeTV;
 
         public VH(View view) {
             super(view);
             adresseTV = view.findViewById(R.id.adresse_tv);
+            typeTV = view.findViewById(R.id.type_tv);
         }
     }
 
-    public ProprieteAdapter(Activity mActivity, List<Propriete> mProprietes) {
+    public ProprieteAdapter(Activity mActivity) {
         this.mActivity = mActivity;
-        this.mProprietes = mProprietes;
+        this.mProprietes = new ArrayList<>();
     }
 
     @Override
     public void onBindViewHolder(ProprieteAdapter.VH holder, final int position) {
+
         final Propriete propriete = mProprietes.get(position);
         holder.adresseTV.setText(propriete.getAdresse());
+        holder.typeTV.setText(propriete.getType());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +67,14 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
                 .inflate(R.layout.propriete_item, parent, false);
 
         return new ProprieteAdapter.VH(view);
+    }
+
+    public void addAll(List<Propriete> proprietes) {
+        mProprietes.addAll(proprietes);
+    }
+
+    public void clear() {
+        mProprietes.clear();
     }
 
     @Override

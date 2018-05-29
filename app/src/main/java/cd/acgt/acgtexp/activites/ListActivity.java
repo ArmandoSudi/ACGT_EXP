@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cd.acgt.acgtexp.Constant;
 import cd.acgt.acgtexp.R;
@@ -46,6 +47,7 @@ public class ListActivity extends AppCompatActivity {
         // fragment
         Intent intent = getIntent();
         final String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
+        Toast.makeText(this, "" + codeProjet, Toast.LENGTH_LONG).show();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -71,13 +73,13 @@ public class ListActivity extends AppCompatActivity {
                     case 0:
                         // riverrain
                         intent.putExtra(Constant.KEY_TYPE, Constant.RIVERAIN_TYPE);
-                        intent.putExtra(codeProjet, Constant.KEY_CODE_PROJECT);
+                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
                         startActivity(intent);
                         break;
                     case 1:
                         // propriete
                         intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
-                        intent.putExtra(codeProjet, Constant.KEY_CODE_PROJECT);
+                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
                         startActivity(intent);
                         break;
                 }

@@ -20,14 +20,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Projet "
-                    style="@style/body_style_one"/>
+                    style="@style/headline_style"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="8dp"
                     android:text=": John Doe"
-                    style="@style/body_style_two"/>
+                    style="@style/headline_style"/>
             </TableRow>
         </TableLayout>
 
@@ -142,9 +142,20 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:id="@+id/capture_piece_identite_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Capturer piece d identite"/>
+
+        <ImageView
+            android:id="@+id/piece_identite_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone"/>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
