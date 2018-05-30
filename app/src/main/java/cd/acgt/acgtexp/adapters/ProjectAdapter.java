@@ -12,7 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import cd.acgt.acgtexp.Constant;
+import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.entites.Projet;
 import cd.acgt.acgtexp.activites.ListActivity;

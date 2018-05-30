@@ -1,4 +1,4 @@
-package cd.acgt.acgtexp;
+package cd.acgt.acgtexp.utils;
 
 /**
  * Created by Sugar on 5/21/2018

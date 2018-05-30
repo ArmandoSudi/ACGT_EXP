@@ -194,6 +194,13 @@
                 android:text="Annuler"/>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/add_propriete_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Ajouter Propriete"/>
+
     </LinearLayout>
 
 </ScrollView>

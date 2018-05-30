@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import cd.acgt.acgtexp.Constant;
+import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.ui.DetailsProprieteFragment;
 import cd.acgt.acgtexp.ui.DetailsRiverainFragment;

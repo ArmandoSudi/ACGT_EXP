@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
@@ -21,6 +25,7 @@
                 style="@style/headline_style"/>
 
             <TextView
+                android:id="@+id/riverain_nom_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
@@ -74,35 +79,52 @@
             android:layout_height="match_parent" />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/pick_image_bt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Url photo 1">
-        <EditText
-            android:id="@+id/url_photo_one"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.design.widget.TextInputLayout>
+        android:text="Choisir images"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Url photo 2">
-        <EditText
-            android:id="@+id/url_photo_two"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/selected_photo_rv"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+    <Button
+        android:id="@+id/find_gps_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="trouver coordonness gps"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Url photo 3">
-        <EditText
-            android:id="@+id/url_photo_three"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.design.widget.TextInputLayout>
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Latitude">
+            <EditText
+                android:id="@+id/latitude_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Longitude">
+            <EditText
+                android:id="@+id/longitude_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -122,4 +144,7 @@
             android:text="Annuler"/>
     </LinearLayout>
 
+
 </LinearLayout>
+
+</ScrollView>

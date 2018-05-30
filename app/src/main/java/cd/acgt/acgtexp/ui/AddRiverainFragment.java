@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -26,9 +25,9 @@ import android.widget.Toast;
 
 import com.fxn.pix.Pix;
 
-import java.util.ArrayList;
-
-import cd.acgt.acgtexp.Constant;
+import cd.acgt.acgtexp.activites.BaseAddActivity;
+import cd.acgt.acgtexp.adapters.SelectedPhotoAdapter;
+import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.database.AcgtExpDatabase;
 import cd.acgt.acgtexp.entites.Riverain;
@@ -41,10 +40,11 @@ import cd.acgt.acgtexp.entites.Riverain;
 public class AddRiverainFragment extends Fragment {
 
     private static final String TAG = "AddRiverainFragment";
+    private Activity mActivity;
 
     EditText mNomCompletET, mAdresseET, mNumeroTelephoneET, mEmailET, mAutreInfoEt, mRepresentantET, mNumeroPieceIdentiteEt, mNumeroRCCMET, mNumeroImpotET;
     Spinner mTypeRiverainSP, mTypePieceIdentiteSP;
-    Button saveBT, cancelBT, capturePieceIdentiteBT;
+    Button saveBT, cancelBT, capturePieceIdentiteBT, addProprieteBT;
     ImageView mPieceIdentiteIV;
     String mCodeProjet, mTypeRiverain, mTypePieceIdentite;
 
@@ -78,6 +78,7 @@ public class AddRiverainFragment extends Fragment {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
             Toast.makeText(getActivity(), "" + mCodeProjet, Toast.LENGTH_SHORT).show();
         }
+        mActivity = getActivity();
     }
 
     @Override
@@ -133,6 +134,7 @@ public class AddRiverainFragment extends Fragment {
 
         saveBT = view.findViewById(R.id.save_bt);
         cancelBT = view.findViewById(R.id.cancel_bt);
+        addProprieteBT = view.findViewById(R.id.add_propriete_bt);
         capturePieceIdentiteBT = view.findViewById(R.id.capture_piece_identite_bt);
 
         saveBT.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +208,7 @@ public class AddRiverainFragment extends Fragment {
         }
     }
 
-    static class SaveRiverainAsyncTask extends AsyncTask<Void, Void, Void> {
+    class SaveRiverainAsyncTask extends AsyncTask<Void, Void, long[]> {
 
         private static final String TAG = "saveRiverainAsyncTask";
         Riverain riverain;
@@ -216,10 +218,32 @@ public class AddRiverainFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected long[] doInBackground(Void... voids) {
             long[] rowId = AcgtExpDatabase.getInstance().getIRiverainDao().insert(riverain);
+
             Log.e(TAG, "doInBackground: row ID: " + rowId[0] );
-            return null;
+            return rowId;
+        }
+
+        @Override
+        protected void onPostExecute(final long[] rowId) {
+            super.onPostExecute(rowId);
+            if (rowId[0] > 0) {
+                Toast.makeText(mActivity, "Riverrain enregistre", Toast.LENGTH_SHORT).show();
+                saveBT.setVisibility(View.GONE);
+                cancelBT.setVisibility(View.GONE );
+                addProprieteBT.setVisibility(View.VISIBLE);
+                addProprieteBT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mActivity, BaseAddActivity.class);
+                        intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
+                        intent.putExtra(Constant.KEY_CODE_PROJECT, mCodeProjet);
+                        intent.putExtra(Constant.KEY_CODE_RIVERAIN, rowId[0]);
+                        startActivity(intent);
+                    }
+                });
+            }
         }
     }
 }

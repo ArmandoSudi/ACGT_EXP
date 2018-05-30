@@ -12,16 +12,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
-import cd.acgt.acgtexp.Constant;
+import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.ui.RiverainListFragment;
 import cd.acgt.acgtexp.ui.ProprieteListFragment;
@@ -29,6 +26,7 @@ import cd.acgt.acgtexp.ui.ProprieteListFragment;
 public class ListActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private FloatingActionButton mFab;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -56,14 +54,42 @@ public class ListActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mFab = findViewById(R.id.fab);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int tabID = tab.getPosition();
+                switch(tabID){
+                    case 0:
+                        mFab.setImageResource(R.drawable.ic_add);
+                        break;
+                    case 1:
+                        mFab.setImageResource(R.drawable.ic_map);
+                        break;
+                    default:
+                        mFab.setImageResource(R.drawable.ic_add);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

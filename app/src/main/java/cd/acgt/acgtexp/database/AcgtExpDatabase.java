@@ -1,14 +1,12 @@
 package cd.acgt.acgtexp.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import cd.acgt.acgtexp.DateConverts;
+import cd.acgt.acgtexp.utils.DateConverts;
 import cd.acgt.acgtexp.dao.IProjetDao;
 import cd.acgt.acgtexp.dao.IProprieteDAo;
 import cd.acgt.acgtexp.dao.IRiverainDao;

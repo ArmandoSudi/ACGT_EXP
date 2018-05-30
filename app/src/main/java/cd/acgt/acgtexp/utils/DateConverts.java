@@ -1,4 +1,4 @@
-package cd.acgt.acgtexp;
+package cd.acgt.acgtexp.utils;
 
 import android.arch.persistence.room.TypeConverter;
 
