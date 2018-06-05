@@ -21,6 +21,8 @@ public class BaseDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int type = intent.getIntExtra(Constant.KEY_TYPE, 100);
+        long codeRiverain = intent.getLongExtra(Constant.KEY_CODE_RIVERAIN, 0);
+        int codePropriete = intent.getIntExtra(Constant.KEY_CODE_PROPRIETE, 0);
         switch(type) {
             case Constant.PROPRIETE_TYPE:
                 fragmentManager.beginTransaction().
@@ -30,7 +32,7 @@ public class BaseDetailActivity extends AppCompatActivity {
 
                 case Constant.RIVERAIN_TYPE:
                     fragmentManager.beginTransaction().
-                            add(R.id.fragment_container, DetailsRiverainFragment.newInstance()).commit();
+                            add(R.id.fragment_container, DetailsRiverainFragment.newInstance(codeRiverain)).commit();
         }
     }
 }

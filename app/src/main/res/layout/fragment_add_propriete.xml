@@ -70,6 +70,7 @@
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/adresse_ti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Adresse">
@@ -79,23 +80,59 @@
             android:layout_height="match_parent" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/pick_image_bt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choisir images"/>
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="Selectionner les photos de la propriete"/>
+
+        <ImageButton
+            android:id="@+id/pick_image_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:src="@drawable/ic_camera"
+            android:contentDescription="camera icon indicating the action of picking images"/>
+
+    </LinearLayout>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/selected_photo_rv"
         android:layout_width="match_parent"
-        android:layout_height="150dp"/>
-    <Button
-        android:id="@+id/find_gps_bt"
-        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:clickable="false"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="trouver coordonness gps"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="Trouver les coordonness GPS de votre position"/>
+
+        <ImageButton
+            android:id="@+id/find_gps_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:src="@drawable/ic_gps"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,25 +140,31 @@
         android:orientation="horizontal">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/latitude_ti"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Latitude">
+
             <EditText
                 android:id="@+id/latitude_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="false"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/longitude_ti"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Longitude">
+
             <EditText
                 android:id="@+id/longitude_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="false"/>
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
@@ -135,12 +178,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:text="Enregistrer"/>
         <Button
             android:id="@+id/cancel_bt"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/deepOrange700"
             android:text="Annuler"/>
     </LinearLayout>
 

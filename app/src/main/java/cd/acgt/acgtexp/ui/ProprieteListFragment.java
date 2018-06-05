@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
+import cd.acgt.acgtexp.dao.IProprieteItemDao;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.adapters.ProprieteAdapter;
@@ -83,7 +85,9 @@ public class ProprieteListFragment extends Fragment {
         return view;
     }
 
-    static class LoadProprieteAsyncTask extends AsyncTask<Void, Void, List<Propriete>> {
+    static class LoadProprieteAsyncTask extends AsyncTask<Void, Void, List<IProprieteItemDao.ProprieteItem>> {
+
+        private static final String TAG = "LoadProprieteAsyncTask";
         ProprieteAdapter proprieteAdapter;
         String codeProjet;
 
@@ -93,15 +97,16 @@ public class ProprieteListFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<Propriete> proprietes) {
-            super.onPostExecute(proprietes);
-            proprieteAdapter.addAll(proprietes);
+        protected void onPostExecute(List<IProprieteItemDao.ProprieteItem> proprieteItems) {
+            super.onPostExecute(proprieteItems);
+            Log.e(TAG, "onPostExecute: " + proprieteItems.size() );
+            proprieteAdapter.add(proprieteItems);
             proprieteAdapter.notifyDataSetChanged();
         }
 
         @Override
-        protected List<Propriete> doInBackground(Void... voids) {
-            return AcgtExpDatabase.getInstance().getIProprieteDao().getProprieteByProjet(codeProjet);
+        protected List<IProprieteItemDao.ProprieteItem> doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIProprieteItemDao().getAll(codeProjet);
         }
     }
 

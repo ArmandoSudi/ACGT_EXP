@@ -2,6 +2,7 @@ package cd.acgt.acgtexp.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.acgt.acgtexp.dao.IProprieteItemDao;
+import cd.acgt.acgtexp.database.AcgtExpDatabase;
+import cd.acgt.acgtexp.entites.Riverain;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.activites.BaseDetailActivity;
@@ -24,6 +28,7 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
 
     Activity mActivity;
     List<Propriete> mProprietes;
+    List<IProprieteItemDao.ProprieteItem> mProprieteItem;
 
     public static class VH extends RecyclerView.ViewHolder {
         TextView adresseTV, proprietaireTV, typeTV;
@@ -32,27 +37,31 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
             super(view);
             adresseTV = view.findViewById(R.id.adresse_tv);
             typeTV = view.findViewById(R.id.type_tv);
+            proprietaireTV = view.findViewById(R.id.proprietaire_tv);
         }
     }
 
     public ProprieteAdapter(Activity mActivity) {
         this.mActivity = mActivity;
         this.mProprietes = new ArrayList<>();
+        this.mProprieteItem = new ArrayList<>();
     }
 
     @Override
     public void onBindViewHolder(ProprieteAdapter.VH holder, final int position) {
 
-        final Propriete propriete = mProprietes.get(position);
-        holder.adresseTV.setText(propriete.getAdresse());
-        holder.typeTV.setText(propriete.getType());
+//        final Propriete propriete = mProprietes.get(position);
+        final IProprieteItemDao.ProprieteItem proprieteItem = mProprieteItem.get(position);
+        holder.adresseTV.setText(proprieteItem.adresse);
+        holder.typeTV.setText(proprieteItem.type);
+        holder.proprietaireTV.setText(proprieteItem.proprietaire);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mActivity, "position: " + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mActivity, BaseDetailActivity.class);
-                intent.putExtra(Constant.KEY_CODE_PROJECT, propriete.getCodePropriete());
+                intent.putExtra(Constant.KEY_CODE_PROJECT, proprieteItem.codePropriete);
                 intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
                 mActivity.startActivity(intent);
             }
@@ -67,16 +76,17 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
         return new ProprieteAdapter.VH(view);
     }
 
-    public void addAll(List<Propriete> proprietes) {
-        mProprietes.addAll(proprietes);
+    public void add(List<IProprieteItemDao.ProprieteItem> proprieteItems) {
+        mProprieteItem.addAll(proprieteItems);
     }
 
     public void clear() {
-        mProprietes.clear();
+        mProprieteItem.clear();
     }
 
     @Override
     public int getItemCount() {
-        return mProprietes.size();
+        return mProprieteItem.size();
     }
+
 }

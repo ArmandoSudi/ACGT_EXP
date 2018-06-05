@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="8dp"
         tools:context=".ui.AddRiverainFragment">
 
         <TableLayout
@@ -19,19 +20,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Projet "
+                    android:text="Projet :"
                     style="@style/headline_style"/>
 
                 <TextView
+                    android:id="@+id/nom_projet_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="8dp"
-                    android:text=": John Doe"
+                    android:text="John Doe"
                     style="@style/headline_style"/>
             </TableRow>
         </TableLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/nomc_complet_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nom complet">
@@ -42,6 +45,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/adresse_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Adresse">
@@ -52,6 +56,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/numero_telephone_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Numéro de téléphone">
@@ -62,6 +67,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Adresse e-mail">
@@ -72,6 +78,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/autres_informations_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Autres informations">
@@ -102,6 +109,7 @@
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/representant_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Representant (optionel)">
@@ -132,6 +140,7 @@
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/numero_piece_identite_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Numero de la piece d identite">
@@ -145,18 +154,23 @@
             android:id="@+id/capture_piece_identite_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:text="Capturer piece d identite"/>
 
         <ImageView
             android:id="@+id/piece_identite_iv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"
             android:visibility="gone"/>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/numero_rccm_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Numero RCCM">
@@ -167,6 +181,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/numero_impot_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Numéro impot">
@@ -185,12 +200,15 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="Enregistrer"/>
             <Button
                 android:id="@+id/cancel_bt"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/deepOrange700"
+                android:textColor="#FFFFFF"
                 android:text="Annuler"/>
         </LinearLayout>
 
@@ -198,6 +216,8 @@
             android:id="@+id/add_propriete_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:visibility="gone"
             android:text="Ajouter Propriete"/>
 

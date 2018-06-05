@@ -104,9 +104,11 @@ public class ListActivity extends AppCompatActivity {
                         break;
                     case 1:
                         // propriete
-                        intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
-                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
-                        startActivity(intent);
+//                        intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
+//                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
+//                        startActivity(intent);
+                        //TODO SHOW THE PROPERTIES RELATED TO THE PROJECT ON A MAP
+                        Toast.makeText(ListActivity.this, "Montrer la carte", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

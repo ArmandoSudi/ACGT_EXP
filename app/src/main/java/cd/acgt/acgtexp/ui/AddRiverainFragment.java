@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -21,12 +22,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fxn.pix.Pix;
 
 import cd.acgt.acgtexp.activites.BaseAddActivity;
 import cd.acgt.acgtexp.adapters.SelectedPhotoAdapter;
+import cd.acgt.acgtexp.entites.Projet;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.database.AcgtExpDatabase;
@@ -43,6 +46,8 @@ public class AddRiverainFragment extends Fragment {
     private Activity mActivity;
 
     EditText mNomCompletET, mAdresseET, mNumeroTelephoneET, mEmailET, mAutreInfoEt, mRepresentantET, mNumeroPieceIdentiteEt, mNumeroRCCMET, mNumeroImpotET;
+    TextInputLayout mNomCompletTI, mAdresseTI, mNumeroTelephoneTI, mAutreInfoTI, mEmailTI, mRepresentantTI, mNumeroPieceIdentiteTI, mNumeroRCCMTI, mNumeroImpoTI;
+    TextView nomProjetTV;
     Spinner mTypeRiverainSP, mTypePieceIdentiteSP;
     Button saveBT, cancelBT, capturePieceIdentiteBT, addProprieteBT;
     ImageView mPieceIdentiteIV;
@@ -71,11 +76,14 @@ public class AddRiverainFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
+            new GetProjetAsynTask(mCodeProjet).execute();
             Toast.makeText(getActivity(), "" + mCodeProjet, Toast.LENGTH_SHORT).show();
         }
         mActivity = getActivity();
@@ -94,6 +102,7 @@ public class AddRiverainFragment extends Fragment {
     }
 
     public void initScreen(View view) {
+        nomProjetTV = view.findViewById(R.id.nom_projet_tv);
         mNomCompletET = view.findViewById(R.id.nom_complet_et);
         mAdresseET =  view.findViewById(R.id.adresse_et);
         mNumeroTelephoneET = view.findViewById(R.id.numero_telephone_et);
@@ -103,6 +112,16 @@ public class AddRiverainFragment extends Fragment {
         mNumeroPieceIdentiteEt = view.findViewById(R.id.numero_piece_identite_et);
         mNumeroRCCMET = view.findViewById(R.id.numero_rccm_et);
         mNumeroImpotET = view.findViewById(R.id.numero_impot_et);
+
+        mNomCompletTI = view.findViewById(R.id.nomc_complet_ti);
+        mAdresseTI = view.findViewById(R.id.adresse_ti);
+        mNumeroTelephoneTI = view.findViewById(R.id.numero_telephone_ti);
+        mEmailTI = view.findViewById(R.id.email_ti);
+        mAutreInfoTI = view.findViewById(R.id.autres_informations_ti);
+        mRepresentantTI = view.findViewById(R.id.representant_ti);
+        mNumeroPieceIdentiteTI = view.findViewById(R.id.numero_piece_identite_ti);
+        mNumeroRCCMTI = view.findViewById(R.id.numero_rccm_ti);
+        mNumeroImpoTI = view.findViewById(R.id.numero_impot_ti);
 
         mPieceIdentiteIV = view.findViewById(R.id.piece_identite_iv);
 
@@ -169,15 +188,56 @@ public class AddRiverainFragment extends Fragment {
         String numeroRCCM = mNumeroRCCMET.getText().toString();
         String numeroImpo = mNumeroImpotET.getText().toString();
 
-        //TODO Implement method to retrieve piece identite URL
-        Riverain riverain = new Riverain(nomComplet, addresse, numeroTelephone, email, autreInfo, mTypeRiverain, representant, mTypePieceIdentite, numeroPieceIdentite, mPieceIdentiteImagePaths, numeroRCCM, numeroImpo, mCodeProjet );
+        boolean isValid = true;
 
-        return riverain;
+        if (nomComplet.equals("")){
+            mNomCompletTI.setError("Le nom complet ne peut pas etre vide");
+            isValid = false;
+        }
+        if (addresse.equals("")) {
+            mAdresseTI.setError("L'adresse ne peut pas etre vide");
+            isValid = false;
+        }
+        if (numeroTelephone.equals("")) {
+            mNumeroTelephoneTI.setError("Le numero de telephone ne peut pas etre vide");
+            isValid = false;
+        }
+        if (email.equals("")) {
+            mEmailTI.setError("Email ne peut pas etre vide");
+            isValid = false;
+        }
+        if (autreInfo.equals("")) {
+            mAutreInfoTI.setError("Autre info ne peut pas etre vide");
+            isValid = false;
+        }
+        if (numeroImpo.equals("")) {
+            mNumeroPieceIdentiteTI.setError("Le numero de la piece d'identite ne peut pas etre vide");
+            isValid = false;
+        }
+        if (numeroRCCM.equals("")) {
+            mNumeroRCCMTI.setError("Le numero RCCM ne peut pas etre vide");
+            isValid = false;
+        }
+        if (numeroImpo.equals("")) {
+            mNumeroImpoTI.setError("Le numero de l'impot ne peut pas etre vide");
+            isValid = false;
+        }
 
+        if (isValid) {
+            //TODO Implement method to retrieve piece identite URL
+            Riverain riverain = new Riverain(nomComplet, addresse, numeroTelephone, email, autreInfo, mTypeRiverain, representant, mTypePieceIdentite, numeroPieceIdentite, mPieceIdentiteImagePaths, numeroRCCM, numeroImpo, mCodeProjet);
+            return riverain;
+        } else {
+            return null;
+        }
     }
 
     public void saveRiverain() {
-        new SaveRiverainAsyncTask(collectData()).execute();
+        if (collectData() == null){
+            Toast.makeText(mActivity, "Veuillez completer tous les champs", Toast.LENGTH_SHORT).show();
+        } else if( collectData() instanceof Riverain) {
+            new SaveRiverainAsyncTask(collectData()).execute();
+        }
     }
 
     protected void askExternalStoragePermissionAtRunTime() {
@@ -205,6 +265,27 @@ public class AddRiverainFragment extends Fragment {
                 Bitmap bitmap = BitmapFactory.decodeFile(mPieceIdentiteImagePaths);
                 mPieceIdentiteIV.setImageBitmap(bitmap);
             }
+        }
+    }
+
+    class GetProjetAsynTask extends AsyncTask<Void, Void, Projet> {
+
+        String codeProjet;
+
+        public GetProjetAsynTask(String codeProjet) {
+            this.codeProjet = codeProjet;
+        }
+
+        @Override
+        protected Projet doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIProjetDao().get(codeProjet);
+        }
+
+        @Override
+        protected void onPostExecute(Projet projet) {
+            super.onPostExecute(projet);
+
+            nomProjetTV.setText(projet.getDesignation());
         }
     }
 

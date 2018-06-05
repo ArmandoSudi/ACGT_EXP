@@ -3,6 +3,7 @@ package cd.acgt.acgtexp.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import cd.acgt.acgtexp.activites.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,10 +11,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,9 +24,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fxn.pix.Pix;
 
@@ -48,10 +50,12 @@ import cd.acgt.acgtexp.utils.GPSTracker;
 public class AddProprieteFragment extends Fragment {
 
     private static final String TAG = "AddProprieteFragment";
+    Activity mActivity;
 
     EditText mAdresseET, mLatitudeET, mLongitudeET;
+    TextInputLayout mAdresseTI;
     TextView mRiverainNomTV;
-    Button mGPSBT;
+    ImageButton mGPSBT;
     Spinner mTypeProprieteSP;
     RecyclerView selectedPhotoRv;
 
@@ -93,7 +97,8 @@ public class AddProprieteFragment extends Fragment {
             new GetRiverainAsyncTask(mRiverainId).execute();
         }
 
-        mSelectedPhotoAdapter = new SelectedPhotoAdapter(getActivity());
+        mActivity = getActivity();
+        mSelectedPhotoAdapter = new SelectedPhotoAdapter(mActivity);
     }
 
     @Override
@@ -121,7 +126,7 @@ public class AddProprieteFragment extends Fragment {
             }
         });
 
-        Button pickImages = view.findViewById(R.id.pick_image_bt);
+        ImageButton pickImages = view.findViewById(R.id.pick_image_bt);
         pickImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +138,7 @@ public class AddProprieteFragment extends Fragment {
 
     void initScreen(View view) {
         mAdresseET = view.findViewById(R.id.adresse_et);
+        mAdresseTI = view.findViewById(R.id.adresse_ti);
         mLatitudeET = view.findViewById(R.id.latitude_et);
         mLongitudeET = view.findViewById(R.id.longitude_et);
         mGPSBT = view.findViewById(R.id.find_gps_bt);
@@ -166,6 +172,10 @@ public class AddProprieteFragment extends Fragment {
     }
 
     Propriete collectData() {
+
+        mAdresseTI.setError("");
+        boolean isValid = true;
+
         String adresse = mAdresseET.getText().toString();
 
         //TODO Select only url when its different from null, otherwise store default url
@@ -173,7 +183,17 @@ public class AddProprieteFragment extends Fragment {
         String urlTwo = mSelectedPhotoAdapter.getImagePaths().get(0);
         String urlThree = mSelectedPhotoAdapter.getImagePaths().get(0);
 
-        return new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet );
+        if (adresse.equals("")) {
+            mAdresseTI.setError("L'adresee ne peut pas etre vide");
+            isValid = false;
+        }
+
+        if (mSelectedPhotoAdapter.getImagePaths().size() == 0) {
+            isValid = false;
+        }
+
+        if (isValid){ return new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet );
+        } else { return null; }
     }
 
     @Override
@@ -185,6 +205,7 @@ public class AddProprieteFragment extends Fragment {
             Log.e(TAG, "onActivityResult: " + mPhotoPaths.size());
 
             if(mPhotoPaths.size() > 0) {
+                selectedPhotoRv.setVisibility(View.VISIBLE);
                 mSelectedPhotoAdapter.addPhotoPaths(mPhotoPaths);
                 mSelectedPhotoAdapter.notifyDataSetChanged();
             }
@@ -204,10 +225,14 @@ public class AddProprieteFragment extends Fragment {
     }
 
     public void savePropriete() {
-        new SaveProprieteAsyncTask(collectData()).execute();
+        if(collectData() == null) {
+            Toast.makeText(mActivity, "Veuillez completer tous les champs", Toast.LENGTH_SHORT).show();
+        } else if (collectData() instanceof Propriete ) {
+            new SaveProprieteAsyncTask(collectData()).execute();
+        }
     }
 
-    static class SaveProprieteAsyncTask extends AsyncTask<Void, Void, Void> {
+    class SaveProprieteAsyncTask extends AsyncTask<Void, Void, long[]> {
 
         private static final String TAG = "SaveProprieteAsyncTask";
         Propriete mPropriete;
@@ -217,10 +242,23 @@ public class AddProprieteFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected long[] doInBackground(Void... voids) {
             long[] rowId = AcgtExpDatabase.getInstance().getIProprieteDao().insert(mPropriete);
             Log.e(TAG, "doInBackground: row ID: " + rowId[0]);
-            return null;
+            return rowId;
+        }
+
+        @Override
+        protected void onPostExecute(long[] rowId) {
+            super.onPostExecute(rowId);
+
+            if( rowId[0] > 0) {
+                Toast.makeText(mActivity, "Propriete ajoute avec succes", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mActivity, ListActivity.class);
+                intent.putExtra(Constant.KEY_CODE_PROJECT, mCodeProjet);
+                mActivity.startActivity(intent);
+                mActivity.finish();
+            }
         }
     }
 

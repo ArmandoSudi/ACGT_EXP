@@ -6,6 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import cd.acgt.acgtexp.dao.IProprieteItemDao;
 import cd.acgt.acgtexp.utils.DateConverts;
 import cd.acgt.acgtexp.dao.IProjetDao;
 import cd.acgt.acgtexp.dao.IProprieteDAo;
@@ -31,6 +32,7 @@ public abstract class AcgtExpDatabase extends RoomDatabase {
     public abstract IProjetDao getIProjetDao();
     public abstract IProprieteDAo getIProprieteDao();
     public abstract IRiverainDao getIRiverainDao();
+    public abstract IProprieteItemDao getIProprieteItemDao();
 
     private static AcgtExpDatabase INSTANCE;
 

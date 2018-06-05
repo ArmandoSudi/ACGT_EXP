@@ -49,7 +49,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, ListActivity.class);
                 intent.putExtra(Constant.KEY_CODE_PROJECT, projet.getCodeProjet());
-                Toast.makeText(mActivity, "CODE :" + projet.getCodeProjet(), Toast.LENGTH_SHORT).show();
                 mActivity.startActivity(intent);
             }
         });

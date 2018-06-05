@@ -26,6 +26,9 @@ public interface IProjetDao {
     @Delete
     void delete(Projet...projet);
 
+    @Query("SELECT * FROM PROJET WHERE CODE_PROJET=:codeProjet")
+    Projet get(String codeProjet);
+
     @Query("SELECT * FROM PROJET")
     List<Projet> getAll();
 

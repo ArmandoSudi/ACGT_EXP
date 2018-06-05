@@ -1,14 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.DetailsRiverainFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Details Riverain" />
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical"
+        tools:context=".ui.DetailsRiverainFragment">
 
-</FrameLayout>
+
+        <TextView
+            android:id="@+id/nom_complet_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/body_style_two"
+            android:text="Nom complet" />
+
+        <TextView
+            android:id="@+id/nom_complet_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/body_style_three"
+            android:text="John Doe" />
+
+        <TextView
+            android:id="@+id/adresse_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            style="@style/body_style_two"
+            android:text="Adresse"/>
+
+        <TextView
+            android:id="@+id/adresse_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/body_style_three"
+            android:text="Av Nguma, Gombe"/>
+        
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <TableRow>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_two"
+                    android:text="telephone"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_two"
+                    android:text="email"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/mobile_number_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_three"
+                    android:text="09999999"/>
+                <TextView
+                    android:id="@+id/email_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_three"
+                    android:text="johndoe@gmail.com"/>
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/autre_information_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            style="@style/body_style_two"
+            android:text="Autres informations"/>
+
+        <TextView
+            android:id="@+id/autre_information_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/body_style_three"
+            android:text="Blah Blah Blah"/>
+
+        <TextView
+            android:id="@+id/type_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            style="@style/body_style_two"
+            android:text="Type"/>
+
+        <TextView
+            android:id="@+id/type_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/body_style_three"
+            android:text="Personne Morale"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <TableRow>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_two"
+                    android:text="Type piece d'identite"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_two"
+                    android:text="Numero Piece d'identite"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/type_piece_identite_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_three"
+                    android:text="Passeport"/>
+                <TextView
+                    android:id="@+id/numero_piece_identite_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_three"
+                    android:text="AB8347CD"/>
+            </TableRow>
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/piece_identite_iv"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <TableRow>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_two"
+                    android:text="Numero RCCM"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_two"
+                    android:text="Numero impot"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/rccm_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_three"
+                    android:text="RCMM234"/>
+                <TextView
+                    android:id="@+id/impot_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    style="@style/body_style_three"
+                    android:text="IMP2435"/>
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>
