@@ -59,9 +59,9 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity, "position: " + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mActivity, BaseDetailActivity.class);
-                intent.putExtra(Constant.KEY_CODE_PROJECT, proprieteItem.codePropriete);
+                Long codePropriete = new Long(proprieteItem.codePropriete);
+                intent.putExtra(Constant.KEY_CODE_PROPRIETE, codePropriete);
                 intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
                 mActivity.startActivity(intent);
             }

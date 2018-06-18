@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +53,10 @@ public class SelectedPhotoAdapter extends RecyclerView.Adapter<SelectedPhotoAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Bitmap bitmap = BitmapFactory.decodeFile(photoPaths.get(position));
+//        Bitmap bitmap = BitmapFactory.decodeFile(photoPaths.get(position));
+//        holder.imageIV.setImageBitmap(bitmap);
 
-        holder.imageIV.setImageBitmap(bitmap);
+        Picasso.get().load("file:" + photoPaths.get(position)).into(holder.imageIV);
     }
 
     public List<Uri> getImageUris(){

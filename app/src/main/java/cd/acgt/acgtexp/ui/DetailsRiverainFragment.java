@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.database.AcgtExpDatabase;
 import cd.acgt.acgtexp.entites.Riverain;
@@ -101,12 +103,16 @@ public class DetailsRiverainFragment extends Fragment {
                 mTypeTV.setText(riverain.getType());
                 mTypePieceIdentite.setText(riverain.getPieceIdentite());
                 mNumeroPieceIdentite.setText(riverain.getNumeroPieceIdentite());
-                mPieceIdentiteIV.setImageResource(R.mipmap.ic_launcher_round);
                 mNumeroRCCMTV.setText(riverain.getRccm());
                 mNumeroImpotTV.setText(riverain.getNumeroImpot());
+
+                String pieceIdentiteUrl = riverain.getUrlPieceIdentite();
+
+                Picasso.get().
+                        load("file:" + pieceIdentiteUrl).
+                        placeholder(R.mipmap.ic_launcher_round).
+                        into(mPieceIdentiteIV);
             }
-
-
         }
 
         @Override

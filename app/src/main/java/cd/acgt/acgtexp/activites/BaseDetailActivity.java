@@ -22,11 +22,11 @@ public class BaseDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int type = intent.getIntExtra(Constant.KEY_TYPE, 100);
         long codeRiverain = intent.getLongExtra(Constant.KEY_CODE_RIVERAIN, 0);
-        int codePropriete = intent.getIntExtra(Constant.KEY_CODE_PROPRIETE, 0);
+        long codePropriete = intent.getLongExtra(Constant.KEY_CODE_PROPRIETE, 0);
         switch(type) {
             case Constant.PROPRIETE_TYPE:
                 fragmentManager.beginTransaction().
-                        add(R.id.fragment_container, DetailsProprieteFragment.newInstance()).
+                        add(R.id.fragment_container, DetailsProprieteFragment.newInstance(codePropriete)).
                         commit();
                 break;
 

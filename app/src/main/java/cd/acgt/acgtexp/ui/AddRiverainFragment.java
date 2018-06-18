@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fxn.pix.Pix;
+import com.squareup.picasso.Picasso;
 
 import cd.acgt.acgtexp.activites.BaseAddActivity;
 import cd.acgt.acgtexp.adapters.SelectedPhotoAdapter;
@@ -235,7 +236,7 @@ public class AddRiverainFragment extends Fragment {
     public void saveRiverain() {
         if (collectData() == null){
             Toast.makeText(mActivity, "Veuillez completer tous les champs", Toast.LENGTH_SHORT).show();
-        } else if( collectData() instanceof Riverain) {
+        } else if( collectData() != null) {
             new SaveRiverainAsyncTask(collectData()).execute();
         }
     }
@@ -262,8 +263,9 @@ public class AddRiverainFragment extends Fragment {
 
             if(mPieceIdentiteImagePaths != null) {
                 mPieceIdentiteIV.setVisibility(View.VISIBLE);
-                Bitmap bitmap = BitmapFactory.decodeFile(mPieceIdentiteImagePaths);
-                mPieceIdentiteIV.setImageBitmap(bitmap);
+//                Bitmap bitmap = BitmapFactory.decodeFile(mPieceIdentiteImagePaths);
+                Picasso.get().load("file:" + mPieceIdentiteImagePaths).into(mPieceIdentiteIV);
+//                mPieceIdentiteIV.setImageBitmap(bitmap);
             }
         }
     }

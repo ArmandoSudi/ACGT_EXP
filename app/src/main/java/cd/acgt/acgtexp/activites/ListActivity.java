@@ -1,6 +1,7 @@
 package cd.acgt.acgtexp.activites;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -92,8 +93,6 @@ public class ListActivity extends AppCompatActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 Intent intent = new Intent(ListActivity.this, BaseAddActivity.class);
                 switch(mViewPager.getCurrentItem()){
                     case 0:
@@ -103,12 +102,14 @@ public class ListActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 1:
-                        // propriete
-//                        intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
-//                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
-//                        startActivity(intent);
+
                         //TODO SHOW THE PROPERTIES RELATED TO THE PROJECT ON A MAP
-                        Toast.makeText(ListActivity.this, "Montrer la carte", Toast.LENGTH_SHORT).show();
+//                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:-4.3249,15.2747?q=-4.3249,15.2747(ACGT)"));
+//                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:-4.3249,15.2747?q=-4.3249,15.2747(ACGT)"));
+//                        startActivity(intent);
+
+                        Intent i = new Intent(ListActivity.this, MapsActivity.class);
+                        startActivity(i);
                         break;
                 }
             }
