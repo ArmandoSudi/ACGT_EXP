@@ -41,7 +41,8 @@
             <EditText
                 android:id="@+id/nom_complet_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -52,7 +53,8 @@
             <EditText
                 android:id="@+id/adresse_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -63,7 +65,9 @@
             <EditText
                 android:id="@+id/numero_telephone_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:maxLength="10"
+                android:inputType="number"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -85,7 +89,8 @@
             <EditText
                 android:id="@+id/autres_informations_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -116,7 +121,8 @@
             <EditText
                 android:id="@+id/representant_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -147,7 +153,8 @@
             <EditText
                 android:id="@+id/numero_piece_identite_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
@@ -177,7 +184,8 @@
             <EditText
                 android:id="@+id/numero_rccm_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -188,7 +196,8 @@
             <EditText
                 android:id="@+id/numero_impot_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout

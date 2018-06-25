@@ -57,7 +57,7 @@ public class RiverainListFragment extends Fragment {
             mCodeProject = getArguments().getString(Constant.KEY_CODE_PROJECT);
         }
 
-        mRiverainAdapter = new RiverainAdapter(getActivity());
+        mRiverainAdapter = new RiverainAdapter(getActivity(), mCodeProject);
     }
 
     @Override

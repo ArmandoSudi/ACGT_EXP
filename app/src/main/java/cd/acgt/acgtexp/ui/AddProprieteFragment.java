@@ -182,6 +182,8 @@ public class AddProprieteFragment extends Fragment {
         String urlOne = mSelectedPhotoAdapter.getImagePaths().get(0);
         String urlTwo = mSelectedPhotoAdapter.getImagePaths().get(0);
         String urlThree = mSelectedPhotoAdapter.getImagePaths().get(0);
+        double latitude = Double.parseDouble(mLatitudeET.getText().toString());
+        double longitude = Double.parseDouble(mLongitudeET.getText().toString());
 
         if (adresse.equals("")) {
             mAdresseTI.setError("L'adresee ne peut pas etre vide");
@@ -192,7 +194,11 @@ public class AddProprieteFragment extends Fragment {
             isValid = false;
         }
 
-        if (isValid){ return new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet );
+//        if (latitude == 0.0 || longitude == 0.0 ) {
+//            isValid = false;
+//        }
+
+        if (isValid){ return new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet, latitude, longitude);
         } else { return null; }
     }
 

@@ -89,7 +89,6 @@ public class ListActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,12 +102,8 @@ public class ListActivity extends AppCompatActivity {
                         break;
                     case 1:
 
-                        //TODO SHOW THE PROPERTIES RELATED TO THE PROJECT ON A MAP
-//                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:-4.3249,15.2747?q=-4.3249,15.2747(ACGT)"));
-//                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:-4.3249,15.2747?q=-4.3249,15.2747(ACGT)"));
-//                        startActivity(intent);
-
                         Intent i = new Intent(ListActivity.this, MapsActivity.class);
+                        i.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
                         startActivity(i);
                         break;
                 }

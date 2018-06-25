@@ -113,7 +113,7 @@ public class ProjectsActivity extends AppCompatActivity {
                 cal.set(Calendar.DAY_OF_MONTH, 10);
                 Date date = cal.getTime();
 
-                Propriete propriete = new Propriete("Av Nguma", "batis", "url one", "url two", "url three",  1, "1001" );
+                Propriete propriete = new Propriete("Av Nguma", "batis", "url one", "url two", "url three",  1, "1001", 0.0, 0.0 );
                 Projet projet = new Projet("1001","Projet 1", date, date, date, date, date);
                 projet.setCodeProjet("1001");
                 Riverain riverain = new Riverain("John Doe", "Av de la paix", "09999999", "batis", "autre info",

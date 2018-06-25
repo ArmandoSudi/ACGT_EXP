@@ -21,7 +21,7 @@ public interface IRiverainDao {
     long[] insert(Riverain...riverain);
 
     @Update
-    void update(Riverain...riverain);
+    int update(Riverain...riverain);
 
     @Delete
     void delete(Riverain...riverain);

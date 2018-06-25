@@ -22,7 +22,7 @@ import cd.acgt.acgtexp.entites.Riverain;
         Projet.class,
         Propriete.class,
         Riverain.class},
-        version = 4, exportSchema = false
+        version = 5, exportSchema = false
 )
 @TypeConverters(DateConverts.class)
 public abstract class AcgtExpDatabase extends RoomDatabase {

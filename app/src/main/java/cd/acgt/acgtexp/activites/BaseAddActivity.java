@@ -24,12 +24,14 @@ public class BaseAddActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int type = intent.getIntExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
         String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
-        long riverainID = intent.getLongExtra(Constant.KEY_CODE_RIVERAIN, 1L);
+        long riverainID = intent.getLongExtra(Constant.KEY_CODE_RIVERAIN, 0L);
         Toast.makeText(this, "" + codeProjet, Toast.LENGTH_LONG).show();
         switch(type) {
             case Constant.PROPRIETE_TYPE:
                 try {
-                    getSupportActionBar().setTitle("Ajouter une Propriete");
+                    if (codeProjet != null) {
+                        getSupportActionBar().setTitle("Ajouter une Propriete");
+                    } else { getSupportActionBar().setTitle("Mettre a jour une Propriet");}
                 } catch (NullPointerException exception){
                     exception.printStackTrace();
                 }
@@ -39,13 +41,15 @@ public class BaseAddActivity extends AppCompatActivity {
                 break;
             case Constant.RIVERAIN_TYPE:
                 try {
-                    getSupportActionBar().setTitle("Ajouter un Riverain");
+                    if (codeProjet != null && riverainID == 0) {
+                        getSupportActionBar().setTitle("Ajouter un Riverain");
+                    } else { getSupportActionBar().setTitle("Mettre a jour un Riverain");}
                 } catch (NullPointerException exception) {
                     exception.printStackTrace();
                 }
 
                 fragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, AddRiverainFragment.newInstance(codeProjet)).commit();
+                        .add(R.id.fragment_container, AddRiverainFragment.newInstance(codeProjet, riverainID)).commit();
                 break;
         }
     }

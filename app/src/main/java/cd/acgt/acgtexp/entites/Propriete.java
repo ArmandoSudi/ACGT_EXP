@@ -31,8 +31,12 @@ public class Propriete {
     public int codeRiverain;
     @ColumnInfo(name = "CODE_PROJET")
     public String codeProjet;
+    @ColumnInfo(name = "LATITUDE")
+    public double latitude;
+    @ColumnInfo(name = "LONGITUDE")
+    public double longitude;
 
-    public Propriete(@NonNull String type, @NonNull String adresse, String urlPhoto1, String urlPhoto2, String urlPhoto3, int codeRiverain, String codeProjet) {
+    public Propriete(@NonNull String type, @NonNull String adresse, String urlPhoto1, String urlPhoto2, String urlPhoto3, int codeRiverain, String codeProjet, double latitude, double longitude) {
         this.type = type;
         this.adresse = adresse;
         this.urlPhoto1 = urlPhoto1;
@@ -40,6 +44,24 @@ public class Propriete {
         this.urlPhoto3 = urlPhoto3;
         this.codeRiverain = codeRiverain;
         this.codeProjet = codeProjet;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getAdresse() {

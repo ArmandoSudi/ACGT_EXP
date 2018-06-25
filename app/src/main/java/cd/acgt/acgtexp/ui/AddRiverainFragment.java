@@ -56,7 +56,11 @@ public class AddRiverainFragment extends Fragment {
 
     String mPieceIdentiteImagePaths;
 
+    Riverain mRiverainToUpdate;
+
     private int REQUEST_CODE = 123;
+    boolean isUpdating = false;
+    long mCodeRiverain = 0;
 
     public AddRiverainFragment() {
         // Required empty public constructor
@@ -69,23 +73,28 @@ public class AddRiverainFragment extends Fragment {
      * @return A new instance of fragment AddRiverainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddRiverainFragment newInstance(String codeProjet) {
+    public static AddRiverainFragment newInstance(String codeProjet, long codeRiverain) {
         AddRiverainFragment fragment = new AddRiverainFragment();
         Bundle args = new Bundle();
         args.putString(Constant.KEY_CODE_PROJECT, codeProjet);
+        args.putLong(Constant.KEY_CODE_RIVERAIN, codeRiverain);
         fragment.setArguments(args);
         return fragment;
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
+        mCodeRiverain = getArguments().getLong(Constant.KEY_CODE_RIVERAIN);
+
+        if (mCodeProjet != null) {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
             new GetProjetAsynTask(mCodeProjet).execute();
-            Toast.makeText(getActivity(), "" + mCodeProjet, Toast.LENGTH_SHORT).show();
+        }
+        if (mCodeRiverain != 0L) {
+            isUpdating = true;
+            new GetRiverain(mCodeRiverain).execute();
         }
         mActivity = getActivity();
     }
@@ -153,6 +162,9 @@ public class AddRiverainFragment extends Fragment {
         });
 
         saveBT = view.findViewById(R.id.save_bt);
+        if (isUpdating) {
+            saveBT.setText("Mettre a jour");
+        }
         cancelBT = view.findViewById(R.id.cancel_bt);
         addProprieteBT = view.findViewById(R.id.add_propriete_bt);
         capturePieceIdentiteBT = view.findViewById(R.id.capture_piece_identite_bt);
@@ -160,7 +172,7 @@ public class AddRiverainFragment extends Fragment {
         saveBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveRiverain();
+                collectData();
             }
         });
         cancelBT.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +190,20 @@ public class AddRiverainFragment extends Fragment {
         });
     }
 
-    public Riverain collectData() {
+    void initData(Riverain riverain){
+        mRiverainToUpdate = riverain;
+        mNomCompletET.setText(riverain.getNomComplet());
+        mAdresseET.setText(riverain.getAdresse());
+        mNumeroTelephoneET.setText(riverain.getTelephone());
+        mEmailET.setText(riverain.getEmail());
+        mAutreInfoEt.setText(riverain.getAutreInformation());
+        mRepresentantET.setText(riverain.getRepresentant());
+        mNumeroPieceIdentiteEt.setText(riverain.getNumeroPieceIdentite());
+        mNumeroRCCMET.setText(riverain.getRccm());
+        mNumeroImpotET.setText(riverain.getNumeroImpot());
+    }
+
+    public void collectData() {
         String nomComplet = mNomCompletET.getText().toString();
         String addresse = mAdresseET.getText().toString();
         String numeroTelephone = mNumeroTelephoneET.getText().toString();
@@ -227,19 +252,34 @@ public class AddRiverainFragment extends Fragment {
         if (isValid) {
             //TODO Implement method to retrieve piece identite URL
             Riverain riverain = new Riverain(nomComplet, addresse, numeroTelephone, email, autreInfo, mTypeRiverain, representant, mTypePieceIdentite, numeroPieceIdentite, mPieceIdentiteImagePaths, numeroRCCM, numeroImpo, mCodeProjet);
-            return riverain;
-        } else {
-            return null;
+
+            if (isUpdating) {
+                mRiverainToUpdate.setNomComplet(nomComplet);
+                mRiverainToUpdate.setAdresse(addresse);
+                mRiverainToUpdate.setTelephone(numeroTelephone);
+                mRiverainToUpdate.setEmail(email);
+                mRiverainToUpdate.setAutreInformation(autreInfo);
+                mRiverainToUpdate.setRepresentant(representant);
+                mRiverainToUpdate.setNumeroPieceIdentite(numeroPieceIdentite);
+                mRiverainToUpdate.setRccm(numeroRCCM);
+                mRiverainToUpdate.setNumeroImpot(numeroImpo);
+                if (mPieceIdentiteImagePaths != null) {
+                    mRiverainToUpdate.setUrlPieceIdentite(mPieceIdentiteImagePaths);
+                }
+                if (mTypeRiverain != null) {
+                    mRiverainToUpdate.setType(mTypeRiverain);
+                }
+                if (mTypePieceIdentite != null) {
+                    mRiverainToUpdate.setPieceIdentite(mTypePieceIdentite);
+                }
+
+                new UpdateRiverainAsyncTask(mRiverainToUpdate).execute();
+            } else {
+                new SaveRiverainAsyncTask(riverain).execute();
+            }
         }
     }
 
-    public void saveRiverain() {
-        if (collectData() == null){
-            Toast.makeText(mActivity, "Veuillez completer tous les champs", Toast.LENGTH_SHORT).show();
-        } else if( collectData() != null) {
-            new SaveRiverainAsyncTask(collectData()).execute();
-        }
-    }
 
     protected void askExternalStoragePermissionAtRunTime() {
         // Enable if permission granted
@@ -327,6 +367,50 @@ public class AddRiverainFragment extends Fragment {
                     }
                 });
             }
+        }
+    }
+
+    class UpdateRiverainAsyncTask extends AsyncTask<Void, Void, Integer> {
+        Riverain riverain;
+
+        public UpdateRiverainAsyncTask(Riverain riverain) {
+            this.riverain = riverain;
+        }
+
+        @Override
+        protected void onPostExecute(Integer i) {
+            super.onPostExecute(i);
+
+            if (i > 0 ) {
+                Toast.makeText(mActivity, "Riverain mis a jour", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            int updatedRows = AcgtExpDatabase.getInstance().getIRiverainDao().update(this.riverain);
+            return updatedRows;
+        }
+    }
+
+    class GetRiverain extends AsyncTask<Void, Void, Riverain> {
+        long codeRiverain;
+
+        public GetRiverain(long codeRiverain) {
+            this.codeRiverain = codeRiverain;
+        }
+
+        @Override
+        protected void onPostExecute(Riverain riverain) {
+            super.onPostExecute(riverain);
+
+            initData(riverain);
+        }
+
+        @Override
+        protected Riverain doInBackground(Void... voids) {
+            Riverain riverain = AcgtExpDatabase.getInstance().getIRiverainDao().get(codeRiverain);
+            return riverain;
         }
     }
 }
