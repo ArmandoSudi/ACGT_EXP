@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
 
         public VH(View view) {
             super(view);
-            nomTV = view.findViewById(R.id.nom_tv);
+            nomTV = view.findViewById(R.id.adresse_tv);
         }
     }
 

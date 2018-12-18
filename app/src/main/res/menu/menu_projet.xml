@@ -6,16 +6,15 @@
     tools:context="cd.acgt.acgtexp.activites.ProjectsActivity">
 
     <item
-        android:id="@+id/action_test"
+        android:id="@+id/action_get_project"
         android:orderInCategory="100"
-        android:title="Populate"
+        android:title="Get projects data"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_clear"
+        android:id="@+id/action_synchronization"
         android:orderInCategory="102"
-        android:title="Show"
+        android:title="Synchronization"
         app:showAsAction="never" />
-
 
 </menu>

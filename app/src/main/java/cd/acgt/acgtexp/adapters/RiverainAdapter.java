@@ -1,8 +1,10 @@
 package cd.acgt.acgtexp.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cd.acgt.acgtexp.activites.BaseAddActivity;
+import cd.acgt.acgtexp.database.AcgtExpDatabase;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.activites.BaseDetailActivity;
@@ -35,7 +38,7 @@ public class RiverainAdapter extends RecyclerView.Adapter<RiverainAdapter.VH> {
 
         public VH(View view) {
             super(view);
-            nomTV = view.findViewById(R.id.nom_tv);
+            nomTV = view.findViewById(R.id.adresse_tv);
             typeTV = view.findViewById(R.id.type_tv);
             editBT = view.findViewById(R.id.edit_bt);
         }
@@ -76,6 +79,23 @@ public class RiverainAdapter extends RecyclerView.Adapter<RiverainAdapter.VH> {
             }
         });
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setMessage("Voulez-vous supprimer cet Riverain ?")
+                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteRiverain(riverain);
+                            }
+                        })
+                        .setNegativeButton("Non", null).show();
+
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -97,5 +117,25 @@ public class RiverainAdapter extends RecyclerView.Adapter<RiverainAdapter.VH> {
 
     public void clear() {
         mRiverains.clear();
+    }
+
+    private void deleteRiverain(final Riverain riverain) {
+        (new AsyncTask<Void, Void, Integer>() {
+            @Override
+            protected void onPostExecute(Integer deleteRows) {
+                super.onPostExecute(deleteRows);
+                if (deleteRows > 0) {
+                    Toast.makeText(mActivity, "Riverain supprime", Toast.LENGTH_SHORT).show();
+                    mActivity.recreate();
+                } else {
+                    Toast.makeText(mActivity, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                return AcgtExpDatabase.getInstance().getIRiverainDao().delete(riverain);
+            }
+        }).execute();
     }
 }

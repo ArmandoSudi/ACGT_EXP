@@ -6,7 +6,15 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import cd.acgt.acgtexp.dao.ILitigeDao;
+import cd.acgt.acgtexp.dao.ILotExpropriationDao;
+import cd.acgt.acgtexp.dao.IPaiementDao;
 import cd.acgt.acgtexp.dao.IProprieteItemDao;
+import cd.acgt.acgtexp.dao.ITypeProprieteDao;
+import cd.acgt.acgtexp.entites.Litige;
+import cd.acgt.acgtexp.entites.LotExpropriation;
+import cd.acgt.acgtexp.entites.Paiement;
+import cd.acgt.acgtexp.entites.TypePropriete;
 import cd.acgt.acgtexp.utils.DateConverts;
 import cd.acgt.acgtexp.dao.IProjetDao;
 import cd.acgt.acgtexp.dao.IProprieteDAo;
@@ -21,8 +29,12 @@ import cd.acgt.acgtexp.entites.Riverain;
 @Database(entities = {
         Projet.class,
         Propriete.class,
-        Riverain.class},
-        version = 5, exportSchema = false
+        Riverain.class,
+        TypePropriete.class,
+        Paiement.class,
+        LotExpropriation.class,
+        Litige.class},
+        version = 9, exportSchema = false
 )
 @TypeConverters(DateConverts.class)
 public abstract class AcgtExpDatabase extends RoomDatabase {
@@ -33,6 +45,10 @@ public abstract class AcgtExpDatabase extends RoomDatabase {
     public abstract IProprieteDAo getIProprieteDao();
     public abstract IRiverainDao getIRiverainDao();
     public abstract IProprieteItemDao getIProprieteItemDao();
+    public abstract ITypeProprieteDao getITypeProprieteDao();
+    public abstract IPaiementDao getIPaiementDao();
+    public abstract ILotExpropriationDao getILotExpropriationDao();
+    public abstract ILitigeDao getILitigeDao();
 
     private static AcgtExpDatabase INSTANCE;
 

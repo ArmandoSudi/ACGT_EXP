@@ -48,6 +48,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         mCodeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
 
+        double lat = intent.getDoubleExtra(Constant.KEY_LATITUDE, 0.0);
+        double lng = intent.getDoubleExtra(Constant.KEY_LONGITUDE, 0.0);
+
+        Log.e(TAG, "onCreate: Latitude: " + lat + " longitude: " + lng );
+
         Toast.makeText(this, "code projet: " + mCodeProjet , Toast.LENGTH_SHORT).show();
     }
 
@@ -89,7 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        mMap.addMarker(new MarkerOptions().position(safricas).title("Marker at Safricas"));
 //        mMap.addMarker(new MarkerOptions().position(middle).title("Marker at Prince de liege"));
 //        mMap.addMarker(new MarkerOptions().position(isipa).title("Marker at Isipa"));
-////        mMap.moveCamera(CameraUpdateFactory.newLatLng(safricas));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(safricas));
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(safricas, 15));
     }
 

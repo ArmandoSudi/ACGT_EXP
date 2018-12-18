@@ -17,7 +17,11 @@ public class DateConverts {
 
     @TypeConverter
     public static long fromDate(Date date) {
-        return date.getTime();
+        if (date != null) {
+            return date.getTime();
+        } else {
+            return 0l;
+        }
     }
 
     public static boolean isDateValid(String date)

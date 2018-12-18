@@ -58,7 +58,7 @@ public class ProprieteListFragment extends Fragment {
         if (getArguments() != null) {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
         }
-        mProprieteAdapter = new ProprieteAdapter(getActivity());
+        mProprieteAdapter = new ProprieteAdapter(getActivity(), mCodeProjet);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ProprieteListFragment extends Fragment {
         return view;
     }
 
-    static class LoadProprieteAsyncTask extends AsyncTask<Void, Void, List<IProprieteItemDao.ProprieteItem>> {
+    static class LoadProprieteAsyncTask extends AsyncTask<Void, Void, List<Propriete>> {
 
         private static final String TAG = "LoadProprieteAsyncTask";
         ProprieteAdapter proprieteAdapter;
@@ -97,16 +97,16 @@ public class ProprieteListFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<IProprieteItemDao.ProprieteItem> proprieteItems) {
-            super.onPostExecute(proprieteItems);
-            Log.e(TAG, "onPostExecute: " + proprieteItems.size() );
-            proprieteAdapter.add(proprieteItems);
+        protected void onPostExecute(List<Propriete> proprietes) {
+            super.onPostExecute(proprietes);
+            Log.e(TAG, "onPostExecute: " + proprietes.size() );
+            proprieteAdapter.add(proprietes);
             proprieteAdapter.notifyDataSetChanged();
         }
 
         @Override
-        protected List<IProprieteItemDao.ProprieteItem> doInBackground(Void... voids) {
-            return AcgtExpDatabase.getInstance().getIProprieteItemDao().getAll(codeProjet);
+        protected List<Propriete> doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIProprieteDao().getProprieteByProjet(codeProjet);
         }
     }
 

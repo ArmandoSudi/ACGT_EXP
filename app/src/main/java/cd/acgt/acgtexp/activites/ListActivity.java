@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import cd.acgt.acgtexp.utils.Constant;
@@ -39,7 +41,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Getting the codeProjet in order to pass it to the propriete/riverain when creating the
@@ -67,7 +69,7 @@ public class ListActivity extends AppCompatActivity {
                         mFab.setImageResource(R.drawable.ic_add);
                         break;
                     case 1:
-                        mFab.setImageResource(R.drawable.ic_map);
+                        mFab.setImageResource(R.drawable.ic_add);
                         break;
                     default:
                         mFab.setImageResource(R.drawable.ic_add);
@@ -94,17 +96,18 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ListActivity.this, BaseAddActivity.class);
                 switch(mViewPager.getCurrentItem()){
-                    case 0:
+                    case 1:
                         // riverrain
                         intent.putExtra(Constant.KEY_TYPE, Constant.RIVERAIN_TYPE);
                         intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
                         startActivity(intent);
                         break;
-                    case 1:
-
-                        Intent i = new Intent(ListActivity.this, MapsActivity.class);
-                        i.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
-                        startActivity(i);
+                    case 0:
+                        // propriete
+//                        Intent i = new Intent(ListActivity.this, MapsActivity.class);
+                        intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
+                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
+                        startActivity(intent);
                         break;
                 }
             }
@@ -132,9 +135,14 @@ public class ListActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_map) {
+            Toast.makeText(this, "map", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -153,17 +161,17 @@ public class ListActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch(position){
                 case 0:
-                    return RiverainListFragment.newInstance(mCodeProjet);
-                case 1:
                     return ProprieteListFragment.newInstance(mCodeProjet);
-                default:
+                case 1:
                     return RiverainListFragment.newInstance(mCodeProjet);
+                default:
+                    return ProprieteListFragment.newInstance(mCodeProjet);
             }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
     }

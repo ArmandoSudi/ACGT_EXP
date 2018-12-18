@@ -2,6 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cd.acgt.acgtexp.activites.ListActivity">
+
+    <item
+        android:id="@+id/action_map"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_map"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
+
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

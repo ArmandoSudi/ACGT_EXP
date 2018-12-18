@@ -20,6 +20,9 @@ public interface IProjetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insert(Projet...projet);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<Projet> projets);
+
     @Update
     void update(Projet...projet);
 

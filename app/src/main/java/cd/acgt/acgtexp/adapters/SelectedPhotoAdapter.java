@@ -43,6 +43,10 @@ public class SelectedPhotoAdapter extends RecyclerView.Adapter<SelectedPhotoAdap
         this.photoPaths.addAll(paths);
     }
 
+    public void addPhotoPath(String path) {
+        this.photoPaths.add(path);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View photoView = LayoutInflater.from(parent.getContext())
@@ -64,6 +68,11 @@ public class SelectedPhotoAdapter extends RecyclerView.Adapter<SelectedPhotoAdap
     }
 
     public List<String> getImagePaths() {return this.photoPaths; }
+
+    public void addPhotUrl(String url) {
+        this.photoPaths.add(url);
+
+    }
 
     @Override
     public int getItemCount() {

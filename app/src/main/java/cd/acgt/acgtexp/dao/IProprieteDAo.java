@@ -21,10 +21,10 @@ public interface IProprieteDAo {
     long[] insert(Propriete...propriete);
 
     @Update
-    void update(Propriete...propriete);
+    int update(Propriete...propriete);
 
     @Delete
-    void delete(Propriete...propriete);
+    int delete(Propriete...propriete);
 
     @Query("SELECT * FROM PROPRIETE WHERE CODE_PROPRIETE=:codePropriete")
     Propriete get(long codePropriete);

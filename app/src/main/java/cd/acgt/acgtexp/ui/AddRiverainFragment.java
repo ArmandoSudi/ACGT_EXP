@@ -383,6 +383,7 @@ public class AddRiverainFragment extends Fragment {
 
             if (i > 0 ) {
                 Toast.makeText(mActivity, "Riverain mis a jour", Toast.LENGTH_SHORT).show();
+                mActivity.finish();
             }
         }
 

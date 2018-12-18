@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#DEDEDE"
         android:padding="8dp"
         tools:context=".ui.AddRiverainFragment">
 
@@ -21,7 +22,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Projet :"
-                    style="@style/headline_style"/>
+                    style="@style/title_style"/>
 
                 <TextView
                     android:id="@+id/nom_projet_tv"
@@ -29,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="8dp"
                     android:text="John Doe"
-                    style="@style/headline_style"/>
+                    style="@style/title_style"/>
             </TableRow>
         </TableLayout>
 
@@ -97,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="#FFFFFF"
             android:paddingTop="8dp"
             android:paddingBottom="4dp">
             <TextView
@@ -129,6 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="#FFFFFF"
             android:paddingTop="8dp"
             android:paddingBottom="4dp">
             <TextView

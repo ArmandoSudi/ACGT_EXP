@@ -7,6 +7,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#DEDEDE"
     android:padding="8dp"
     android:orientation="vertical"
     tools:context=".ui.AddProprieteFragment">
@@ -16,13 +17,12 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
-        <TableRow
-            android:paddingTop="8dp">
+        <TableRow>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Proprietaire :"
-                style="@style/headline_style"/>
+                style="@style/body_style_two"/>
 
             <TextView
                 android:id="@+id/riverain_nom_tv"
@@ -33,19 +33,19 @@
                 style="@style/headline_style"/>
         </TableRow>
         <TableRow
-            android:paddingTop="8dp">
+            android:paddingTop="4dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Projet "
-                style="@style/body_style_one"/>
+                style="@style/body_style_two"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
                 android:text="Autoroute Aeorport"
-                style="@style/body_style_two"/>
+                style="@style/body_style_one"/>
         </TableRow>
     </TableLayout>
 
@@ -53,20 +53,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="8dp"
+        android:background="#FFFFFF"
+        android:paddingTop="4dp"
         android:paddingBottom="4dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="7dp"
             android:text="Type"/>
-        <Spinner
-            android:id="@+id/type_propriete_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:entries="@array/type_propriete"/>
+            <Spinner
+                android:id="@+id/type_propriete_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:entries="@array/type_propriete"/>
+
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -94,12 +96,13 @@
 
         <ImageButton
             android:id="@+id/pick_image_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:src="@drawable/ic_camera"
-            android:contentDescription="camera icon indicating the action of picking images"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="camera icon indicating the action of picking images"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_photo_add" />
 
     </LinearLayout>
 
@@ -119,14 +122,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:text="Trouver les coordonness GPS de votre position"/>
 
         <ImageButton
             android:id="@+id/find_gps_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             style="@style/Widget.AppCompat.Button.Colored"
             android:src="@drawable/ic_gps"/>
@@ -150,6 +153,7 @@
                 android:id="@+id/latitude_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="0.0"
                 android:focusableInTouchMode="false"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -164,6 +168,7 @@
                 android:id="@+id/longitude_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="0.0"
                 android:focusableInTouchMode="false"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -186,6 +191,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/deepOrange700"
+            android:textColor="#ffffff"
             android:text="Annuler"/>
     </LinearLayout>
 

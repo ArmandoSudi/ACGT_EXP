@@ -24,7 +24,7 @@ public interface IRiverainDao {
     int update(Riverain...riverain);
 
     @Delete
-    void delete(Riverain...riverain);
+    int delete(Riverain...riverain);
 
     @Query("SELECT * FROM RIVERAIN WHERE CODE_RIVERAIN=:codeRiverain")
     Riverain get(long codeRiverain);

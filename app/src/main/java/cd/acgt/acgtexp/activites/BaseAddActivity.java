@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import cd.acgt.acgtexp.ui.AddTypeProprieteFragment;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.ui.AddProprieteFragment;
@@ -25,11 +26,12 @@ public class BaseAddActivity extends AppCompatActivity {
         int type = intent.getIntExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
         String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
         long riverainID = intent.getLongExtra(Constant.KEY_CODE_RIVERAIN, 0L);
+        long proprieteID = intent.getLongExtra(Constant.KEY_CODE_PROPRIETE, 0L);
         Toast.makeText(this, "" + codeProjet, Toast.LENGTH_LONG).show();
         switch(type) {
             case Constant.PROPRIETE_TYPE:
                 try {
-                    if (codeProjet != null) {
+                    if (codeProjet != null && proprieteID == 0) {
                         getSupportActionBar().setTitle("Ajouter une Propriete");
                     } else { getSupportActionBar().setTitle("Mettre a jour une Propriet");}
                 } catch (NullPointerException exception){
@@ -37,7 +39,7 @@ public class BaseAddActivity extends AppCompatActivity {
                 }
 
                 fragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, AddProprieteFragment.newInstance(codeProjet, riverainID)).commit();
+                        .add(R.id.fragment_container, AddProprieteFragment.newInstance(codeProjet, riverainID, proprieteID)).commit();
                 break;
             case Constant.RIVERAIN_TYPE:
                 try {
@@ -51,6 +53,10 @@ public class BaseAddActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction()
                         .add(R.id.fragment_container, AddRiverainFragment.newInstance(codeProjet, riverainID)).commit();
                 break;
+
+            case Constant.TYPE_PROPRIETE_TYPE:
+                fragmentManager.beginTransaction()
+                        .add(R.id.fragment_container, AddTypeProprieteFragment.newInstance(proprieteID)).commit();
         }
     }
 
