@@ -6,6 +6,8 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -18,20 +20,35 @@ public class Paiement {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "CODE_PAIEMENT")
+    @SerializedName("codePaiement")
     public String codePaiement;
+
     @ColumnInfo(name = "CODE_PROPRIETE")
+    @SerializedName("codePropriete")
     public int codePropriete;
+
     @ColumnInfo(name = "DATE_PAIEMENT")
+    @SerializedName("datePaiement")
     public Date datePaiement;
+
     @ColumnInfo(name = "MONTANT")
+    @SerializedName("montant")
     public double montant;
+
     @ColumnInfo(name = "TYPE_PAIEMENT")
+    @SerializedName("typePaiement")
     public String typePaiement;
+
     @ColumnInfo(name = "BANQUE")
+    @SerializedName("banque")
     public String banque;
+
     @ColumnInfo(name = "REFERENCE")
+    @SerializedName("referencePaiement")
     public String referencePaiement;
+
     @ColumnInfo(name = "OBSERVATION")
+    @SerializedName("observation")
     public String observation;
 
     public Paiement(String codePaiement, int codePropriete, Date datePaiement, double montant, String typePaiement, String banque, String referencePaiement, String observation) {

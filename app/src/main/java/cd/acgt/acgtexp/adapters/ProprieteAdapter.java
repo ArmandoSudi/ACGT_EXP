@@ -38,13 +38,12 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
     String mCodeProject;
 
     public static class VH extends RecyclerView.ViewHolder {
-        TextView adresseTV, proprietaireTV, typeTV;
+        TextView adresseTV, proprietaireTV;
         ImageButton editBT;
 
         public VH(View view) {
             super(view);
             adresseTV = view.findViewById(R.id.adresse_tv);
-            typeTV = view.findViewById(R.id.type_tv);
             proprietaireTV = view.findViewById(R.id.proprietaire_tv);
             editBT = view.findViewById(R.id.edit_bt);
         }
@@ -63,7 +62,6 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
         final Propriete propriete = mProprietes.get(position);
 //        final IProprieteItemDao.ProprieteItem proprieteItem = mProprieteItem.get(position);
         holder.adresseTV.setText(propriete.adresse);
-        holder.typeTV.setText(propriete.type);
 //        holder.proprietaireTV.setText(proprieteItem.proprietaire);
 
         holder.editBT.setOnClickListener(new View.OnClickListener() {

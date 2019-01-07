@@ -28,13 +28,8 @@ import cd.acgt.acgtexp.ui.ProprieteListFragment;
 
 public class ListActivity extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private static final String TAG = "ListActivity";
     private FloatingActionButton mFab;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,71 +45,28 @@ public class ListActivity extends AppCompatActivity {
         final String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
         Toast.makeText(this, "" + codeProjet, Toast.LENGTH_LONG).show();
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), codeProjet);
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(ProprieteListFragment.newInstance(codeProjet), "propriete").commit();
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
         mFab = findViewById(R.id.fab);
-
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int tabID = tab.getPosition();
-                switch(tabID){
-                    case 0:
-                        mFab.setImageResource(R.drawable.ic_add);
-                        break;
-                    case 1:
-                        mFab.setImageResource(R.drawable.ic_add);
-                        break;
-                    default:
-                        mFab.setImageResource(R.drawable.ic_add);
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ListActivity.this, BaseAddActivity.class);
-                switch(mViewPager.getCurrentItem()){
-                    case 1:
-                        // riverrain
-                        intent.putExtra(Constant.KEY_TYPE, Constant.RIVERAIN_TYPE);
-                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
-                        startActivity(intent);
-                        break;
-                    case 0:
-                        // propriete
-//                        Intent i = new Intent(ListActivity.this, MapsActivity.class);
-                        intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
-                        intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
-                        startActivity(intent);
-                        break;
-                }
+
+                intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
+                intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
+                startActivity(intent);
+
+                // FOR ADDING A RIVERAIN FOR A PARTICULAR PROJECT
+                // intent.putExtra(Constant.KEY_TYPE, Constant.RIVERAIN_TYPE);
+                // intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
+                // startActivity(intent);
+
             }
         });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,35 +96,4 @@ public class ListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        String mCodeProjet;
-
-        public SectionsPagerAdapter(FragmentManager fm, String codeProjet) {
-            super(fm);
-            this.mCodeProjet = codeProjet;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch(position){
-                case 0:
-                    return ProprieteListFragment.newInstance(mCodeProjet);
-                case 1:
-                    return RiverainListFragment.newInstance(mCodeProjet);
-                default:
-                    return ProprieteListFragment.newInstance(mCodeProjet);
-            }
-        }
-
-        @Override
-        public int getCount() {
-            // Show 2 total pages.
-            return 2;
-        }
-    }
 }

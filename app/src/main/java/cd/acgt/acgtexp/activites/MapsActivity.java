@@ -128,9 +128,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (Propriete propriete : proprietes) {
                 InfoWindowData info = new InfoWindowData();
                 info.setAdresse(propriete.getAdresse());
-                info.setType(propriete.getType());
-                info.setImageUrl(propriete.getUrlPhoto1());
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(propriete.getLatitude(), propriete.getLongitude())).title(propriete.getType())).setTag(info);
+//                info.setType(propriete.getType());
+//                info.setImageUrl(propriete.getUrlPhoto1());
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(propriete.getLatitude(), propriete.getLongitude())).title("type")).setTag(info);
 
                 Polyline polyline = googleMap.addPolyline(new PolylineOptions().
                     clickable(true).

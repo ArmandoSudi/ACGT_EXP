@@ -34,7 +34,7 @@ import cd.acgt.acgtexp.entites.Riverain;
         Paiement.class,
         LotExpropriation.class,
         Litige.class},
-        version = 9, exportSchema = false
+        version = 10, exportSchema = false
 )
 @TypeConverters(DateConverts.class)
 public abstract class AcgtExpDatabase extends RoomDatabase {

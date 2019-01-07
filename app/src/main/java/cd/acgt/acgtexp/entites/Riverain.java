@@ -6,52 +6,69 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "RIVERAIN", foreignKeys = {
         @ForeignKey(entity = Projet.class, parentColumns = "CODE_PROJET", childColumns = "CODE_PROJET")
 })
 public class Riverain {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "CODE_RIVERAIN")
-    public int codeRiverrain;
+    @SerializedName("codeRiverrain")
+    public String codeRiverrain;
+
     @NonNull
     @ColumnInfo(name = "NOM_COMPLET")
+    @SerializedName("nomComplet")
     public String nomComplet;
-    @NonNull
+
     @ColumnInfo(name = "ADRESSE")
+    @SerializedName("adresse")
     public String adresse;
-    @NonNull
+
     @ColumnInfo(name = "TELEPHONE")
+    @SerializedName("telephone")
     public String telephone;
-    @NonNull
+
     @ColumnInfo(name = "EMAIL")
+    @SerializedName("email")
     public String email;
-    @NonNull
+
     @ColumnInfo(name = "AUTRE_INFORMATION")
+    @SerializedName("informations")
     public String autreInformation;
-    @NonNull
+
     @ColumnInfo(name = "TYPE")
+    @SerializedName("type")
     public String type; // PM or PP
-    @NonNull
+
     @ColumnInfo(name = "REPRESENTANT")
+    @SerializedName("representant")
     public String representant; // Nullable
-    @NonNull
+
     @ColumnInfo(name = "PIECE_IDENTITE")
+    @SerializedName("pieceIdentite")
     public String pieceIdentite;
-    @NonNull
+
     @ColumnInfo(name = "NUMERO_PIECE_IDENTITE")
+    @SerializedName("numeroPieceIdentite")
     public String numeroPieceIdentite;
-    @NonNull
+
     @ColumnInfo(name = "URL_PIECE_IDENTITE")
+    @SerializedName("urlPieceidentite")
     public String urlPieceIdentite;
-    @NonNull
+
     @ColumnInfo(name = "RCCM")
+    @SerializedName("rccm")
     public String rccm;
-    @NonNull
+
     @ColumnInfo(name = "NUMERO_IMPOT")
+    @SerializedName("numeroImpot")
     public String numeroImpot;
-    @NonNull
+
     @ColumnInfo(name = "CODE_PROJET")
+    @SerializedName("codeProjet")
     public String codeProjet;
 
     public Riverain(@NonNull String nomComplet, @NonNull String adresse, @NonNull String telephone, @NonNull String email, @NonNull String autreInformation, @NonNull String type, @NonNull String representant, @NonNull String pieceIdentite, @NonNull String numeroPieceIdentite, @NonNull String urlPieceIdentite, @NonNull String rccm, @NonNull String numeroImpot, @NonNull String codeProjet) {

@@ -227,13 +227,16 @@ public class AddProprieteFragment extends Fragment {
 //        }
 
         if (isValid){
-            Propriete propriete = new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet, latitude, longitude);
+            //TODO correct the constructor for propriete
+//            Propriete propriete = new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet, latitude, longitude);
+
             if (isUpdating) {
 
                 mProprieteToUpdate.setAdresse(adresse);
-                if (urlOne != null) mProprieteToUpdate.setUrlPhoto1(urlOne);
-                if (urlTwo != null) mProprieteToUpdate.setUrlPhoto2(urlTwo);
-                if (urlThree != null) mProprieteToUpdate.setUrlPhoto3(urlThree);
+                String urlImages = "";
+                if (urlOne != null) urlImages = urlOne;
+                if (urlTwo != null) urlImages = urlImages + ", " + urlTwo;
+                if (urlThree != null) urlImages = urlImages + ", " + urlThree;
                 if (latitude != 0.0 && longitude != 0.0) {
                     mProprieteToUpdate.setLatitude(latitude);
                     mProprieteToUpdate.setLongitude(longitude);
@@ -241,7 +244,7 @@ public class AddProprieteFragment extends Fragment {
                 new UpdateProprieteAsyncTask(mProprieteToUpdate).execute();
 
             } else {
-                new SaveProprieteAsyncTask(propriete).execute();
+//                new SaveProprieteAsyncTask(propriete).execute();
             }
         } else {
             Toast.makeText(mActivity, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
@@ -305,7 +308,7 @@ public class AddProprieteFragment extends Fragment {
 
     void initData(Propriete propriete) {
         mAdresseET.setText(propriete.getAdresse());
-        selectValue(mTypeProprieteSP, propriete.getType());
+//        selectValue(mTypeProprieteSP, propriete.getType());
     }
 
     /**

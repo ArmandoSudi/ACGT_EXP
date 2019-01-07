@@ -15,7 +15,6 @@ public interface IProprieteItemDao {
     @Query("SELECT RIVERAIN.NOM_COMPLET AS proprietaire,  " +
             "RIVERAIN.CODE_RIVERAIN AS codeRiverain, " +
             "PROPRIETE.ADRESSE AS adresse, " +
-            "PROPRIETE.TYPE AS type, " +
             "PROPRIETE.CODE_PROPRIETE AS codePropriete " +
             "FROM RIVERAIN INNER JOIN PROPRIETE ON PROPRIETE.CODE_RIVERAIN = RIVERAIN.CODE_RIVERAIN " +
             "WHERE RIVERAIN.CODE_PROJET =:codeProjet")
@@ -29,6 +28,5 @@ public interface IProprieteItemDao {
         public int codePropriete;
         public String adresse;
         public String proprietaire;
-        public String type;
     }
 }

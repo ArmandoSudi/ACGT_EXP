@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cd.acgt.acgtexp.R;
@@ -65,10 +66,14 @@ public class SynchronizationActivity extends AppCompatActivity {
     }
 
     public List<Propriete> getPropriete(){
+
+//        Date signatureProtocoleAccord = new Date()
+
         List<Propriete> proprieteList = new ArrayList<>();
-        proprieteList.add(new Propriete("Batis", "Blv 30", "http://www.google.com", "http://www.google.com", "http://www.google.com", 1, "100053001", 0.0, 0.0));
-        proprieteList.add(new Propriete("Arbre", "Mbudi", "http://www.google.com", "http://www.google.com", "http://www.google.com", 1, "100053001", 0.0, 0.0));
-        proprieteList.add(new Propriete("Mur", "Kasumbalesa", "http://www.google.com", "http://www.google.com", "http://www.google.com", 1, "100053001", 0.0, 0.0));
+
+        proprieteList.add(new Propriete(1,"100053001001", "1000531", "http://www.google.com", "PK 10",1.0, 1.0, "http://www.google.com", null));
+        proprieteList.add(new Propriete(1,"100053001001", "1000531", "http://www.google.com", "PK 10",1.0, 1.0, "http://www.google.com", null));
+
 
         return proprieteList;
     }

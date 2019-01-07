@@ -152,10 +152,10 @@ public class DetailsProprieteFragment extends Fragment {
             super.onPostExecute(propriete);
             mPropriete = propriete;
             mAdresseTV.setText(propriete.getAdresse());
-            mTypeTV.setText(propriete.getType());
-            if (propriete.getUrlPhoto1() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto1());
-            if (propriete.getUrlPhoto2() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto2());
-            if (propriete.getUrlPhoto3() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto3());
+//            mTypeTV.setText(propriete.getType());
+//            if (propriete.getUrlPhoto1() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto1());
+//            if (propriete.getUrlPhoto2() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto2());
+//            if (propriete.getUrlPhoto3() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto3());
 
             mPhotoAdapter.notifyDataSetChanged();
         }

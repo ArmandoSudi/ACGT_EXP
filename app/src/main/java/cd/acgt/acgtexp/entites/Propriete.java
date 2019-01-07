@@ -7,45 +7,63 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
+
 @Entity(tableName = "PROPRIETE", foreignKeys = {
-        @ForeignKey(entity = Projet.class, parentColumns = "CODE_PROJET", childColumns = "CODE_PROJET")
+        @ForeignKey(entity = LotExpropriation.class, parentColumns = "CODE_LOT_EXPROPRIATION", childColumns = "CODE_LOT_EXPROPRIATION")
 })
 public class Propriete {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "CODE_PROPRIETE")
+    @SerializedName("codePropriete")
     int codePropriete;
-    @NonNull
-    @ColumnInfo(name = "TYPE")
-    public String type;
+
+    @ColumnInfo(name = "CODE_LOT_EXPROPRIATION")
+    @SerializedName("codeLotExpropriation")
+    String codeLotExpropriation;
+
+    @ColumnInfo(name = "CODE_RIVERAIN")
+    @SerializedName("codeRiverain")
+    public String codeRiverain;
+
     @NonNull
     @ColumnInfo(name = "ADRESSE")
+    @SerializedName("adresse")
     public String adresse;
-    @ColumnInfo(name = "URL_PHOTO_1")
-    public String urlPhoto1;
-    @ColumnInfo(name = "URL_PHOTO_2")
-    public String urlPhoto2;
-    @ColumnInfo(name = "URL_PHOTO_3")
-    public String urlPhoto3;
-    @ColumnInfo(name = "CODE_RIVERAIN")
-    public int codeRiverain;
-    @ColumnInfo(name = "CODE_PROJET")
-    public String codeProjet;
+
+    @ColumnInfo(name = "PK")
+    @SerializedName("PK")
+    public String PK;
+
     @ColumnInfo(name = "LATITUDE")
+    @SerializedName("latitude")
     public double latitude;
+
     @ColumnInfo(name = "LONGITUDE")
+    @SerializedName("longitude")
     public double longitude;
 
-    public Propriete(@NonNull String type, @NonNull String adresse, String urlPhoto1, String urlPhoto2, String urlPhoto3, int codeRiverain, String codeProjet, double latitude, double longitude) {
-        this.type = type;
-        this.adresse = adresse;
-        this.urlPhoto1 = urlPhoto1;
-        this.urlPhoto2 = urlPhoto2;
-        this.urlPhoto3 = urlPhoto3;
+    @ColumnInfo(name = "URL_IMAGES")
+    @SerializedName("urlImages")
+    public String urlImages;
+
+    @ColumnInfo(name = "SIGNATURE_PROTOCOLE_ACCORD")
+    @SerializedName("signatureProtocoleAccord")
+    public Date signatureProtocoleAccord;
+
+    public Propriete(@NonNull int codePropriete, String codeLotExpropriation, String codeRiverain, @NonNull String adresse, String PK, double latitude, double longitude, String urlImages, Date signatureProtocoleAccord) {
+        this.codePropriete = codePropriete;
+        this.codeLotExpropriation = codeLotExpropriation;
         this.codeRiverain = codeRiverain;
-        this.codeProjet = codeProjet;
+        this.adresse = adresse;
+        this.PK = PK;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.urlImages = urlImages;
+        this.signatureProtocoleAccord = signatureProtocoleAccord;
     }
 
     public double getLatitude() {
@@ -76,44 +94,47 @@ public class Propriete {
         this.codePropriete = codePropriete;
     }
 
-    @NonNull
-    public String getType() {
-        return type;
-    }
-
-    public int getCodeRiverain() {
+    public String getCodeRiverain() {
         return codeRiverain;
-    }
-
-    public String getCodeProjet() {
-        return codeProjet;
     }
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
 
-    public String getUrlPhoto1() {
-        return urlPhoto1;
+    public String getUrlImages() {
+        return urlImages;
     }
 
-    public void setUrlPhoto1(String urlPhoto1) {
-        this.urlPhoto1 = urlPhoto1;
+    public void setUrlImages(String urlImages) {
+        this.urlImages = urlImages;
     }
 
-    public String getUrlPhoto2() {
-        return urlPhoto2;
+    public Date getSignatureProtocoleAccord() {
+        return signatureProtocoleAccord;
     }
 
-    public void setUrlPhoto2(String urlPhoto2) {
-        this.urlPhoto2 = urlPhoto2;
+    public void setSignatureProtocoleAccord(Date signatureProtocoleAccord) {
+        this.signatureProtocoleAccord = signatureProtocoleAccord;
     }
 
-    public String getUrlPhoto3() {
-        return urlPhoto3;
+    public String getCodeLotExpropriation() {
+        return codeLotExpropriation;
     }
 
-    public void setUrlPhoto3(String urlPhoto3) {
-        this.urlPhoto3 = urlPhoto3;
+    public void setCodeLotExpropriation(String codeLotExpropriation) {
+        this.codeLotExpropriation = codeLotExpropriation;
+    }
+
+    public void setCodeRiverain(String codeRiverain) {
+        this.codeRiverain = codeRiverain;
+    }
+
+    public String getPK() {
+        return PK;
+    }
+
+    public void setPK(String PK) {
+        this.PK = PK;
     }
 }
