@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.database.AcgtExpDatabase;
+import cd.acgt.acgtexp.entites.LotExpropriation;
 import cd.acgt.acgtexp.entites.Projet;
 import cd.acgt.acgtexp.service.ExpApi;
 import cd.acgt.acgtexp.service.ExpApiInterface;
@@ -93,8 +95,23 @@ public class SelectUserActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(List<Projet>... lists) {
                 AcgtExpDatabase.getInstance().getIProjetDao().insertAll(projets);
+                AcgtExpDatabase.getInstance().getILotExpropriationDao().insertAll(getLotExpropriation());
                 return null;
             }
         }).execute(projets);
+    }
+
+    List<LotExpropriation> getLotExpropriation(){
+        List<LotExpropriation> lots = new ArrayList<>();
+        lots.add(new LotExpropriation("10001", "100053001", "Lot 1 - Lubumbashi", "10", "20"));
+        lots.add(new LotExpropriation("10002", "100053001", "Lot 2 - Lubumbashi", "21", "30"));
+        lots.add(new LotExpropriation("10003", "100053002", "Lot 1 - Niana", "10", "20"));
+        lots.add(new LotExpropriation("10004", "100053002", "Lot 2 - Niana", "21", "30"));
+        lots.add(new LotExpropriation("10005", "100053003", "Lot 1 - Tourisme", "10", "20"));
+        lots.add(new LotExpropriation("10006", "100053003", "Lot 2 - Tourisme", "21", "30"));
+        lots.add(new LotExpropriation("10007", "100053004", "Lot 1 - Lutendele", "10", "20"));
+        lots.add(new LotExpropriation("10008", "100053004", "Lot 2 - Lutendele", "21", "30"));
+
+        return lots;
     }
 }

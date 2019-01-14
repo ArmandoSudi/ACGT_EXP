@@ -19,14 +19,20 @@ public interface ILotExpropriationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insert(LotExpropriation...lotExpropriation);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long[] insertAll(List<LotExpropriation> lotExpropriations);
+
     @Update
     int update(LotExpropriation...lotExpropriation);
 
     @Delete
     int delete(LotExpropriation...lotExpropriation);
 
-    @Query("SELECT * FROM LOT_EXPROPRIATION WHERE CODE_LOT_EXPROPRIATION=:codeLotExpropriation")
-    LotExpropriation get(String codeLotExpropriation);
+    @Query("SELECT * FROM LOT_EXPROPRIATION")
+    List<LotExpropriation> getAll();
+
+    @Query("SELECT * FROM LOT_EXPROPRIATION WHERE CODE_PROJET=:codeProjet")
+    List<LotExpropriation> get(String codeProjet);
 
     @Query("DELETE FROM LOT_EXPROPRIATION")
     void deleteAll();

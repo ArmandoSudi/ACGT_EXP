@@ -14,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +42,11 @@ import cd.acgt.acgtexp.utils.Constant;
  */
 public class DetailsProprieteFragment extends Fragment {
 
-    RecyclerView mImagesRV, mTypeProprieteRV, mPaiementRV, mLitigeRV;
-    TextView mAdresseTV, mTypeTV;
+    RecyclerView mTypeProprieteRV, mPaiementRV, mLitigeRV;
+    TextView mAdresseTV;
+    ImageView mProprietePhotoIV;
     Button mMapBT;
 
-    SelectedPhotoAdapter mPhotoAdapter;
     TypeProprieteAdapter mTypeProprieteAdapter;
     LitigeAdapter mLitigeAdapter;
     PaiementAdapter mPaiementAdapter;
@@ -79,7 +82,6 @@ public class DetailsProprieteFragment extends Fragment {
             mCodePropriete = getArguments().getLong(Constant.KEY_CODE_PROPRIETE);
         }
         mActivity = getActivity();
-        mPhotoAdapter = new SelectedPhotoAdapter(mActivity);
         mTypeProprieteAdapter = new TypeProprieteAdapter(mActivity);
         mLitigeAdapter = new LitigeAdapter(mActivity);
         mPaiementAdapter = new PaiementAdapter(mActivity);
@@ -110,11 +112,8 @@ public class DetailsProprieteFragment extends Fragment {
     }
 
     public void initView(View view) {
-        mImagesRV = view.findViewById(R.id.images_rv);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mImagesRV.setHasFixedSize(true);
-        mImagesRV.setLayoutManager(linearLayoutManager);
-        mImagesRV.setAdapter(mPhotoAdapter);
+
+        mProprietePhotoIV = view.findViewById(R.id.propriete_photo_iv);
 
         mTypeProprieteRV = view.findViewById(R.id.type_propriete_rv);
         mTypeProprieteRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -135,7 +134,6 @@ public class DetailsProprieteFragment extends Fragment {
         mLitigeRV.setAdapter(mLitigeAdapter);
 
         mAdresseTV = view.findViewById(R.id.adresse_tv);
-        mTypeTV = view.findViewById(R.id.type_tv);
         mMapBT = view.findViewById(R.id.map_bt);
     }
 
@@ -152,12 +150,9 @@ public class DetailsProprieteFragment extends Fragment {
             super.onPostExecute(propriete);
             mPropriete = propriete;
             mAdresseTV.setText(propriete.getAdresse());
+            Picasso.get().load("file:" + propriete.urlImages).into(mProprietePhotoIV);
 //            mTypeTV.setText(propriete.getType());
 //            if (propriete.getUrlPhoto1() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto1());
-//            if (propriete.getUrlPhoto2() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto2());
-//            if (propriete.getUrlPhoto3() != null) mPhotoAdapter.addPhotUrl(propriete.getUrlPhoto3());
-
-            mPhotoAdapter.notifyDataSetChanged();
         }
 
         @Override

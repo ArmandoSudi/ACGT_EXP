@@ -67,13 +67,12 @@ public class SynchronizationActivity extends AppCompatActivity {
 
     public List<Propriete> getPropriete(){
 
-//        Date signatureProtocoleAccord = new Date()
-
+        Date signatureProtocoleAccord = new Date();
         List<Propriete> proprieteList = new ArrayList<>();
 
-        proprieteList.add(new Propriete(1,"100053001001", "1000531", "http://www.google.com", "PK 10",1.0, 1.0, "http://www.google.com", null));
-        proprieteList.add(new Propriete(1,"100053001001", "1000531", "http://www.google.com", "PK 10",1.0, 1.0, "http://www.google.com", null));
-
+        proprieteList.add(new Propriete("10001", "10001","1000531", "pk 10", 1.0, 1.0, "http://www.google.com", signatureProtocoleAccord));
+        proprieteList.add(new Propriete("10001", "10001","1000531", "pk 10", 1.0, 1.0, "http://www.google.com", signatureProtocoleAccord));
+        proprieteList.add(new Propriete("10001", "10001","1000531", "pk 10", 1.0, 1.0, "http://www.google.com", signatureProtocoleAccord));
 
         return proprieteList;
     }

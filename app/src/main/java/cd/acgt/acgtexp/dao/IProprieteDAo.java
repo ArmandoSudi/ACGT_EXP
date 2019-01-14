@@ -30,7 +30,7 @@ public interface IProprieteDAo {
     Propriete get(long codePropriete);
 
     @Query("SELECT * FROM PROPRIETE WHERE CODE_LOT_EXPROPRIATION=:codeLotExpropriation")
-    List<Propriete> getProprieteByProjet(String codeLotExpropriation);
+    List<Propriete> getProprieteByLot(String codeLotExpropriation);
 
     @Query("DELETE FROM PROPRIETE")
     void deleteAll();

@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import cd.acgt.acgtexp.adapters.ProprieteAdapter;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
 import cd.acgt.acgtexp.ui.RiverainListFragment;
@@ -30,6 +33,7 @@ public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
     private FloatingActionButton mFab;
+    String mCodeProjet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +46,18 @@ public class ListActivity extends AppCompatActivity {
         // Getting the codeProjet in order to pass it to the propriete/riverain when creating the
         // fragment
         Intent intent = getIntent();
-        final String codeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
-        Toast.makeText(this, "" + codeProjet, Toast.LENGTH_LONG).show();
+        mCodeProjet = intent.getStringExtra(Constant.KEY_CODE_PROJECT);
+        Toast.makeText(this, "" + mCodeProjet, Toast.LENGTH_LONG).show();
 
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(ProprieteListFragment.newInstance(codeProjet), "propriete").commit();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container,
+                ProprieteListFragment.newInstance(mCodeProjet)).commit();
 
+        initScreen();
+    }
+
+    public void initScreen() {
         mFab = findViewById(R.id.fab);
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -56,14 +66,8 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListActivity.this, BaseAddActivity.class);
 
                 intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
-                intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
+                intent.putExtra(Constant.KEY_CODE_PROJECT, mCodeProjet);
                 startActivity(intent);
-
-                // FOR ADDING A RIVERAIN FOR A PARTICULAR PROJECT
-                // intent.putExtra(Constant.KEY_TYPE, Constant.RIVERAIN_TYPE);
-                // intent.putExtra(Constant.KEY_CODE_PROJECT, codeProjet);
-                // startActivity(intent);
-
             }
         });
     }

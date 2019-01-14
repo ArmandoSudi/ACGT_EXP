@@ -116,7 +116,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             protected List<Propriete> doInBackground(Void... voids) {
-                return AcgtExpDatabase.getInstance().getIProprieteDao().getProprieteByProjet(codeProjet);
+//                return AcgtExpDatabase.getInstance().getIProprieteDao().getProprieteByProjet(codeProjet);
+                return null;
 
             }
         }).execute();

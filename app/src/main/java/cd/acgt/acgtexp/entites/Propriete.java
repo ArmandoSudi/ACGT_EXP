@@ -54,8 +54,7 @@ public class Propriete {
     @SerializedName("signatureProtocoleAccord")
     public Date signatureProtocoleAccord;
 
-    public Propriete(@NonNull int codePropriete, String codeLotExpropriation, String codeRiverain, @NonNull String adresse, String PK, double latitude, double longitude, String urlImages, Date signatureProtocoleAccord) {
-        this.codePropriete = codePropriete;
+    public Propriete(String codeLotExpropriation, String codeRiverain, @NonNull String adresse, String PK, double latitude, double longitude, String urlImages, Date signatureProtocoleAccord) {
         this.codeLotExpropriation = codeLotExpropriation;
         this.codeRiverain = codeRiverain;
         this.adresse = adresse;

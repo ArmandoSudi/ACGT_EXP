@@ -25,4 +25,17 @@ public class LotExpropriation {
     public String pkInitial;
     @ColumnInfo(name = "PK_FINAL")
     public String pkFinal;
+
+    public LotExpropriation(@NonNull String codeLotExpropriation, String codeProjet, String designation, String pkInitial, String pkFinal) {
+        this.codeLotExpropriation = codeLotExpropriation;
+        this.codeProjet = codeProjet;
+        this.designation = designation;
+        this.pkInitial = pkInitial;
+        this.pkFinal = pkFinal;
+    }
+
+    @Override
+    public String toString() {
+        return this.designation;
+    }
 }

@@ -68,12 +68,9 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mActivity, BaseAddActivity.class);
-                intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
                 intent.putExtra(Constant.KEY_CODE_PROJECT, mCodeProject);
                 Long codePropriete = new Long(propriete.getCodePropriete());
-                Long codeRiverain = new Long(propriete.codeRiverain);
                 intent.putExtra(Constant.KEY_CODE_PROPRIETE, codePropriete);
-                intent.putExtra(Constant.KEY_CODE_RIVERAIN, codeRiverain);
                 mActivity.startActivity(intent);
             }
         });
@@ -116,6 +113,7 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
     }
 
     public void add(List<Propriete> proprieteItems) {
+        clear();
         mProprietes.addAll(proprieteItems);
     }
 

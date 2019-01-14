@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.LocalServerSocket;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,14 +25,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fxn.pix.Pix;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cd.acgt.acgtexp.entites.LotExpropriation;
 import cd.acgt.acgtexp.entites.Riverain;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
@@ -60,22 +65,20 @@ public class AddProprieteFragment extends Fragment {
     private static final String TAG = "AddProprieteFragment";
     Activity mActivity;
 
-    EditText mAdresseET, mLatitudeET, mLongitudeET;
+    EditText mAdresseET, mLatitudeET, mLongitudeET, mPKET;
     TextInputLayout mAdresseTI;
-    TextView mRiverainNomTV;
     ImageButton mGPSBT, mPickImageBT;
-    Spinner mTypeProprieteSP;
-    RecyclerView selectedPhotoRv;
+    Spinner mLotSP;
+    ImageView selectedPhotoIV;
 
     SelectedPhotoAdapter mSelectedPhotoAdapter;
     private GPSAsyncTask gpsAsyncTask;
 
-    String mTypePropriete, mCodeProjet, mCurrentPhotoPath;
+    String mTypePropriete, mCodeProjet, mCurrentPhotoPath, mCodeLotExpropriation;
     long mRiverainId, mProprieteId;
     boolean isUpdating;
     Propriete mProprieteToUpdate;
-
-    List<String> mPhotoPaths = new ArrayList<>();
+    LotExpropriation mLotExpropriation;
 
     private int REQUEST_CODE = 123;
 
@@ -96,6 +99,8 @@ public class AddProprieteFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+
     }
 
     @Override
@@ -107,8 +112,7 @@ public class AddProprieteFragment extends Fragment {
         if (getArguments() != null) {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
             mRiverainId = getArguments().getLong(Constant.KEY_CODE_RIVERAIN);
-
-            if (mRiverainId != 0) new GetRiverainAsyncTask(mRiverainId).execute();
+            new GetLotExpropriationAsyncTask(mCodeProjet).execute();
         }
 
         if (mProprieteId != 0L) {
@@ -144,6 +148,7 @@ public class AddProprieteFragment extends Fragment {
     void initScreen(View view) {
         mAdresseET = view.findViewById(R.id.adresse_et);
         mAdresseTI = view.findViewById(R.id.adresse_ti);
+        mPKET = view.findViewById(R.id.pk_et);
         mLatitudeET = view.findViewById(R.id.latitude_et);
         mLongitudeET = view.findViewById(R.id.longitude_et);
         mGPSBT = view.findViewById(R.id.find_gps_bt);
@@ -154,25 +159,10 @@ public class AddProprieteFragment extends Fragment {
                 gpsAsyncTask.execute();
             }
         });
-        mRiverainNomTV = view.findViewById(R.id.riverain_nom_tv);
 
-        selectedPhotoRv = view.findViewById(R.id.selected_photo_rv);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        selectedPhotoRv.setHasFixedSize(true);
-        selectedPhotoRv.setLayoutManager(linearLayoutManager);
-        selectedPhotoRv.setAdapter(mSelectedPhotoAdapter);
+        selectedPhotoIV = view.findViewById(R.id.selected_photo_iv);
 
-        mTypeProprieteSP = view.findViewById(R.id.type_propriete_sp);
-        mTypeProprieteSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mTypePropriete = (String) parent.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        mLotSP = view.findViewById(R.id.lot_sp);
 
         Button saveBT = view.findViewById(R.id.save_bt);
         saveBT.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +193,8 @@ public class AddProprieteFragment extends Fragment {
         boolean isValid = true;
 
         String adresse = mAdresseET.getText().toString();
+        String PK = mPKET.getText().toString();
+        Date signatureProtocoleAccord = new Date();
 
         //TODO Select only url when its different from null, otherwise store default url
         int size = mSelectedPhotoAdapter.getImagePaths().size() - 1;
@@ -218,17 +210,14 @@ public class AddProprieteFragment extends Fragment {
             isValid = false;
         }
 
-        if (mSelectedPhotoAdapter.getImagePaths().size() == 0 && !isUpdating) {
-            isValid = false;
-        }
-
+        //TODO Check if the latitude and longitude is VALID
 //        if (latitude == 0.0 || longitude == 0.0 ) {
 //            isValid = false;
 //        }
 
         if (isValid){
             //TODO correct the constructor for propriete
-//            Propriete propriete = new Propriete(mTypePropriete, adresse, urlOne, urlTwo, urlThree, 1, mCodeProjet, latitude, longitude);
+            Propriete propriete = new Propriete(mCodeLotExpropriation, "codeRiverain",adresse, PK, latitude, longitude, mCurrentPhotoPath, signatureProtocoleAccord);
 
             if (isUpdating) {
 
@@ -244,7 +233,7 @@ public class AddProprieteFragment extends Fragment {
                 new UpdateProprieteAsyncTask(mProprieteToUpdate).execute();
 
             } else {
-//                new SaveProprieteAsyncTask(propriete).execute();
+                new SaveProprieteAsyncTask(propriete).execute();
             }
         } else {
             Toast.makeText(mActivity, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
@@ -256,9 +245,7 @@ public class AddProprieteFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constant.REQUEST_TAKE_PHOTO_PROPRIETE) {
-            selectedPhotoRv.setVisibility(View.VISIBLE);
-            mSelectedPhotoAdapter.addPhotoPath(mCurrentPhotoPath);
-            mSelectedPhotoAdapter.notifyDataSetChanged();
+            Picasso.get().load("file:" + mCurrentPhotoPath).into(selectedPhotoIV);
         }
 
 //        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
@@ -309,6 +296,15 @@ public class AddProprieteFragment extends Fragment {
     void initData(Propriete propriete) {
         mAdresseET.setText(propriete.getAdresse());
 //        selectValue(mTypeProprieteSP, propriete.getType());
+    }
+
+    List<LotExpropriation> getLotExpropriation(){
+        List<LotExpropriation> lots = new ArrayList<>();
+        lots.add(new LotExpropriation("1001", "1000", "Lot 1", "10", "20"));
+        lots.add(new LotExpropriation("1002", "1000", "Lot 2", "21", "30"));
+        lots.add(new LotExpropriation("1003", "1000", "Lot 3", "31", "40"));
+
+        return lots;
     }
 
     /**
@@ -379,46 +375,39 @@ public class AddProprieteFragment extends Fragment {
         }
     }
 
-    class GetRiverainAsyncTask extends AsyncTask<Void, Void, Riverain> {
-        long codeRiverain;
+    class GetLotExpropriationAsyncTask extends AsyncTask<Void, Void, List<LotExpropriation>> {
+        String codeProjet;
 
-        public GetRiverainAsyncTask(long codeRiverain) {
-            this.codeRiverain = codeRiverain;
+        public GetLotExpropriationAsyncTask(String codeProjet) {
+            this.codeProjet = codeProjet;
         }
 
         @Override
-        protected Riverain doInBackground(Void... voids) {
-            Riverain riverain = AcgtExpDatabase.getInstance().getIRiverainDao().get(codeRiverain);
-            return riverain;
-        }
+        protected void onPostExecute(List<LotExpropriation> lotExpropriations) {
+            super.onPostExecute(lotExpropriations);
 
-        @Override
-        protected void onPostExecute(Riverain riverain) {
-            super.onPostExecute(riverain);
-            if (mRiverainNomTV != null ) {
-                mRiverainNomTV.setText(riverain.getNomComplet());
+            mLotSP.setAdapter(new ArrayAdapter<LotExpropriation>(mActivity, android.R.layout.simple_spinner_item, lotExpropriations));
+            mLotSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    mLotExpropriation = (LotExpropriation) parent.getItemAtPosition(position);
+                    mCodeLotExpropriation = mLotExpropriation.codeLotExpropriation;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            for (LotExpropriation lot : lotExpropriations) {
+                Log.e(TAG, "onPostExecute: " + lot.codeLotExpropriation + " " + lot.codeProjet);
             }
         }
-    }
-
-    class GetProprieteAsyncTask extends AsyncTask<Void, Void, Propriete> {
-        long codePropriete;
-
-        public GetProprieteAsyncTask(long codePropriete) {
-            this.codePropriete = codePropriete;
-        }
 
         @Override
-        protected void onPostExecute(Propriete propriete) {
-            super.onPostExecute(propriete);
-
-            mProprieteToUpdate = propriete;
-            initData(mProprieteToUpdate);
-        }
-
-        @Override
-        protected Propriete doInBackground(Void... voids) {
-            return AcgtExpDatabase.getInstance().getIProprieteDao().get(codePropriete);
+        protected List<LotExpropriation> doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getILotExpropriationDao().get(codeProjet);
         }
     }
 
