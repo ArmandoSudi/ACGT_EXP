@@ -27,7 +27,7 @@ public interface IProprieteDAo {
     int delete(Propriete...propriete);
 
     @Query("SELECT * FROM PROPRIETE WHERE CODE_PROPRIETE=:codePropriete")
-    Propriete get(long codePropriete);
+    Propriete get(int codePropriete);
 
     @Query("SELECT * FROM PROPRIETE WHERE CODE_LOT_EXPROPRIATION=:codeLotExpropriation")
     List<Propriete> getProprieteByLot(String codeLotExpropriation);

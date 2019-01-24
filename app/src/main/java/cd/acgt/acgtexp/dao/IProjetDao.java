@@ -35,6 +35,11 @@ public interface IProjetDao {
     @Query("SELECT * FROM PROJET")
     List<Projet> getAll();
 
+    @Query("SELECT PROJET.DESIGNATION FROM PROJET " +
+            "INNER JOIN LOT_EXPROPRIATION ON LOT_EXPROPRIATION.CODE_PROJET = PROJET.CODE_PROJET " +
+            "WHERE LOT_EXPROPRIATION.CODE_LOT_EXPROPRIATION=:codeLotExpropriation")
+    String getProjetDesignation(String codeLotExpropriation);
+
     @Query("DELETE FROM PROJET")
     void deleteAll();
 }

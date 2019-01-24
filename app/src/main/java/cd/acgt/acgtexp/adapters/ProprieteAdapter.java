@@ -69,7 +69,7 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
             public void onClick(View view) {
                 Intent intent = new Intent(mActivity, BaseAddActivity.class);
                 intent.putExtra(Constant.KEY_CODE_PROJECT, mCodeProject);
-                Long codePropriete = new Long(propriete.getCodePropriete());
+                int codePropriete = propriete.getCodePropriete();
                 intent.putExtra(Constant.KEY_CODE_PROPRIETE, codePropriete);
                 mActivity.startActivity(intent);
             }
@@ -79,7 +79,7 @@ public class ProprieteAdapter extends RecyclerView.Adapter<ProprieteAdapter.VH> 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, BaseDetailActivity.class);
-                Long codePropriete = new Long(propriete.getCodePropriete());
+                int codePropriete = propriete.getCodePropriete();
                 intent.putExtra(Constant.KEY_CODE_PROPRIETE, codePropriete);
                 intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
                 mActivity.startActivity(intent);

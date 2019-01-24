@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fxn.pix.Pix;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -44,6 +45,7 @@ import java.util.Date;
 import java.util.List;
 
 import cd.acgt.acgtexp.entites.LotExpropriation;
+import cd.acgt.acgtexp.entites.Projet;
 import cd.acgt.acgtexp.entites.Riverain;
 import cd.acgt.acgtexp.utils.Constant;
 import cd.acgt.acgtexp.R;
@@ -70,12 +72,14 @@ public class AddProprieteFragment extends Fragment {
     ImageButton mGPSBT, mPickImageBT;
     Spinner mLotSP;
     ImageView selectedPhotoIV;
+    TextView mProjetDesignationTV;
 
     SelectedPhotoAdapter mSelectedPhotoAdapter;
     private GPSAsyncTask gpsAsyncTask;
 
-    String mTypePropriete, mCodeProjet, mCurrentPhotoPath, mCodeLotExpropriation;
-    long mRiverainId, mProprieteId;
+    String mCodeProjet, mCurrentPhotoPath, mCodeLotExpropriation;
+    long mRiverainId;
+    int mProprieteId;
     boolean isUpdating;
     Propriete mProprieteToUpdate;
     LotExpropriation mLotExpropriation;
@@ -86,12 +90,12 @@ public class AddProprieteFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static AddProprieteFragment newInstance(String codeProjet, long riverainId, long proprieteID) {
+    public static AddProprieteFragment newInstance(String codeProjet, long riverainId, int proprieteID) {
         AddProprieteFragment fragment = new AddProprieteFragment();
         Bundle args = new Bundle();
         args.putString(Constant.KEY_CODE_PROJECT, codeProjet);
         args.putLong(Constant.KEY_CODE_RIVERAIN, riverainId);
-        args.putLong(Constant.KEY_CODE_PROPRIETE, proprieteID);
+        args.putInt(Constant.KEY_CODE_PROPRIETE, proprieteID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,15 +103,13 @@ public class AddProprieteFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mProprieteId = getArguments().getLong(Constant.KEY_CODE_PROPRIETE);
+        mProprieteId = getArguments().getInt(Constant.KEY_CODE_PROPRIETE);
 
         if (getArguments() != null) {
             mCodeProjet = getArguments().getString(Constant.KEY_CODE_PROJECT);
@@ -115,9 +117,10 @@ public class AddProprieteFragment extends Fragment {
             new GetLotExpropriationAsyncTask(mCodeProjet).execute();
         }
 
-        if (mProprieteId != 0L) {
+        if (mProprieteId != 0) {
             isUpdating = true;
-//            new GetProprieteAsyncTask(mProprieteId).execute();
+            Log.e(TAG, "onCreate: UPDATING PROPRIETE : " + mProprieteId);
+            new GetProprieteAsyncTask(mProprieteId).execute();
         }
 
         mActivity = getActivity();
@@ -141,6 +144,7 @@ public class AddProprieteFragment extends Fragment {
                 dispatchTakePictureIntent(Constant.REQUEST_TAKE_PHOTO_PROPRIETE);
             }
         });
+        mProjetDesignationTV = view.findViewById(R.id.projet_designation_tv);
 
         return view;
     }
@@ -187,20 +191,12 @@ public class AddProprieteFragment extends Fragment {
 
     void collectData() {
 
-        String urlOne = null , urlTwo = null , urlThree = null;
-
         mAdresseTI.setError("");
         boolean isValid = true;
 
         String adresse = mAdresseET.getText().toString();
         String PK = mPKET.getText().toString();
         Date signatureProtocoleAccord = new Date();
-
-        //TODO Select only url when its different from null, otherwise store default url
-        int size = mSelectedPhotoAdapter.getImagePaths().size() - 1;
-        if (size >= 0) urlOne = mSelectedPhotoAdapter.getImagePaths().get(size--);
-        if (size >= 0) urlTwo = mSelectedPhotoAdapter.getImagePaths().get(size--);
-        if (size >= 0) urlThree = mSelectedPhotoAdapter.getImagePaths().get(size--);
 
         double latitude = Double.parseDouble(mLatitudeET.getText().toString());
         double longitude = Double.parseDouble(mLongitudeET.getText().toString());
@@ -220,18 +216,13 @@ public class AddProprieteFragment extends Fragment {
             Propriete propriete = new Propriete(mCodeLotExpropriation, "codeRiverain",adresse, PK, latitude, longitude, mCurrentPhotoPath, signatureProtocoleAccord);
 
             if (isUpdating) {
-
-                mProprieteToUpdate.setAdresse(adresse);
-                String urlImages = "";
-                if (urlOne != null) urlImages = urlOne;
-                if (urlTwo != null) urlImages = urlImages + ", " + urlTwo;
-                if (urlThree != null) urlImages = urlImages + ", " + urlThree;
-                if (latitude != 0.0 && longitude != 0.0) {
-                    mProprieteToUpdate.setLatitude(latitude);
-                    mProprieteToUpdate.setLongitude(longitude);
-                }
+                if (adresse != null) mProprieteToUpdate.setAdresse(adresse);
+                if (PK != null ) mProprieteToUpdate.setPK(PK);
+                if (signatureProtocoleAccord != null) mProprieteToUpdate.setSignatureProtocoleAccord(signatureProtocoleAccord);
+                if (latitude != 0.0) mProprieteToUpdate.setLatitude(latitude);
+                if (longitude != 0.0) mProprieteToUpdate.setLongitude(longitude);
+                if (mCurrentPhotoPath != null) mProprieteToUpdate.setUrlImages(mCurrentPhotoPath);
                 new UpdateProprieteAsyncTask(mProprieteToUpdate).execute();
-
             } else {
                 new SaveProprieteAsyncTask(propriete).execute();
             }
@@ -295,20 +286,15 @@ public class AddProprieteFragment extends Fragment {
 
     void initData(Propriete propriete) {
         mAdresseET.setText(propriete.getAdresse());
-//        selectValue(mTypeProprieteSP, propriete.getType());
-    }
-
-    List<LotExpropriation> getLotExpropriation(){
-        List<LotExpropriation> lots = new ArrayList<>();
-        lots.add(new LotExpropriation("1001", "1000", "Lot 1", "10", "20"));
-        lots.add(new LotExpropriation("1002", "1000", "Lot 2", "21", "30"));
-        lots.add(new LotExpropriation("1003", "1000", "Lot 3", "31", "40"));
-
-        return lots;
+        mPKET.setText(propriete.getPK());
+        selectValue(mLotSP, propriete.getCodeLotExpropriation());
+        Picasso.get().load("file:" + propriete.getUrlImages()).into(selectedPhotoIV);
+        mLatitudeET.setText("" + propriete.getLatitude());
+        mLongitudeET.setText("" + propriete.getLongitude());
     }
 
     /**
-     * Selectionne la Valeur passe au Spinner
+     * Initialise le spinner avec la valeur qui est dans l'objet
      * @param spinner
      * @param value
      */
@@ -363,6 +349,8 @@ public class AddProprieteFragment extends Fragment {
         protected void onPostExecute(Integer rowsUpdated) {
             super.onPostExecute(rowsUpdated);
 
+            Log.e(TAG, "NBR OF ROWS UPDATED: " + rowsUpdated);
+
             if (rowsUpdated > 0) {
                 Toast.makeText(mActivity, "Propriete mis a jour", Toast.LENGTH_SHORT).show();
                 mActivity.finish();
@@ -371,12 +359,37 @@ public class AddProprieteFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            return AcgtExpDatabase.getInstance().getIProprieteDao().update(propriete);
+            int numberOfRow = AcgtExpDatabase.getInstance().getIProprieteDao().update(propriete);
+            return numberOfRow;
+        }
+    }
+
+    class GetProprieteAsyncTask extends AsyncTask<Void, Void, Propriete>{
+        int codePropriete;
+
+        public GetProprieteAsyncTask(int codePropriete) {
+            this.codePropriete = codePropriete;
+        }
+
+        @Override
+        protected void onPostExecute(Propriete propriete) {
+            super.onPostExecute(propriete);
+
+            mProprieteToUpdate = propriete;
+            if (propriete != null) {
+                initData(mProprieteToUpdate);
+            }
+        }
+
+        @Override
+        protected Propriete doInBackground(Void... voids) {
+            return AcgtExpDatabase.getInstance().getIProprieteDao().get(codePropriete);
         }
     }
 
     class GetLotExpropriationAsyncTask extends AsyncTask<Void, Void, List<LotExpropriation>> {
         String codeProjet;
+        String projetDesignation;
 
         public GetLotExpropriationAsyncTask(String codeProjet) {
             this.codeProjet = codeProjet;
@@ -386,7 +399,9 @@ public class AddProprieteFragment extends Fragment {
         protected void onPostExecute(List<LotExpropriation> lotExpropriations) {
             super.onPostExecute(lotExpropriations);
 
-            mLotSP.setAdapter(new ArrayAdapter<LotExpropriation>(mActivity, android.R.layout.simple_spinner_item, lotExpropriations));
+            mProjetDesignationTV.setText(projetDesignation);
+
+            mLotSP.setAdapter(new ArrayAdapter<LotExpropriation>(mActivity, R.layout.spinner_item_black, lotExpropriations));
             mLotSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -396,17 +411,14 @@ public class AddProprieteFragment extends Fragment {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
                 }
             });
-
-            for (LotExpropriation lot : lotExpropriations) {
-                Log.e(TAG, "onPostExecute: " + lot.codeLotExpropriation + " " + lot.codeProjet);
-            }
         }
 
         @Override
         protected List<LotExpropriation> doInBackground(Void... voids) {
+            Projet projet = AcgtExpDatabase.getInstance().getIProjetDao().get(codeProjet);
+            projetDesignation = projet.designation;
             return AcgtExpDatabase.getInstance().getILotExpropriationDao().get(codeProjet);
         }
     }
@@ -499,6 +511,25 @@ public class AddProprieteFragment extends Fragment {
             }
             mLatitudeET.setText(latitude + "");
             mLongitudeET.setText(longitude + "");
+        }
+    }
+
+    class GetProjetAsyncTask extends AsyncTask<Void, Void, Projet> {
+        String codeLotExpropriation;
+
+        public GetProjetAsyncTask(String codeLotExpropriation) {
+            this.codeLotExpropriation = codeLotExpropriation;
+        }
+
+        @Override
+        protected void onPostExecute(Projet projet) {
+            super.onPostExecute(projet);
+        }
+
+        @Override
+        protected Projet doInBackground(Void... voids) {
+            String codeProjet = AcgtExpDatabase.getInstance().getILotExpropriationDao().getProjetFromLotExpropriation(codeLotExpropriation);
+            return AcgtExpDatabase.getInstance().getIProjetDao().get(codeProjet);
         }
     }
 

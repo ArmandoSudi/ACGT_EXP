@@ -10,6 +10,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import cd.acgt.acgtexp.entites.LotExpropriation;
+import cd.acgt.acgtexp.entites.Projet;
 
 /**
  * Created by Sugar on 7/3/2018
@@ -33,6 +34,9 @@ public interface ILotExpropriationDao {
 
     @Query("SELECT * FROM LOT_EXPROPRIATION WHERE CODE_PROJET=:codeProjet")
     List<LotExpropriation> get(String codeProjet);
+
+    @Query("SELECT CODE_PROJET FROM LOT_EXPROPRIATION WHERE CODE_LOT_EXPROPRIATION=:codeLotExpropriation")
+    String getProjetFromLotExpropriation(String codeLotExpropriation);
 
     @Query("DELETE FROM LOT_EXPROPRIATION")
     void deleteAll();

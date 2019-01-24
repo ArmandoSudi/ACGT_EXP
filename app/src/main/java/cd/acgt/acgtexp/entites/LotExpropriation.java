@@ -38,4 +38,9 @@ public class LotExpropriation {
     public String toString() {
         return this.designation;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.codeLotExpropriation.equals(obj) ? true : false;
+    }
 }

@@ -32,6 +32,7 @@ import cd.acgt.acgtexp.entites.Propriete;
  * create an instance of this fragment.
  */
 public class ProprieteListFragment extends Fragment {
+    private static final String TAG = "ProprieteListFragment";
 
     private String mCodeProjet;
     private ProprieteAdapter mProprieteAdapter;
@@ -67,6 +68,7 @@ public class ProprieteListFragment extends Fragment {
         mProprieteAdapter = new ProprieteAdapter(getActivity(), mCodeProjet);
         mActivity = getActivity();
         mLotSpinner = mActivity.findViewById(R.id.spinner_nav);
+        Log.e(TAG, "onCreate: CALLING ");
 
         new LoadLotAsyncTask(mCodeProjet, mLotSpinner, mActivity, mProprieteAdapter).execute();
     }
@@ -77,7 +79,8 @@ public class ProprieteListFragment extends Fragment {
         if (mProprieteAdapter !=  null) {
             mProprieteAdapter.clear();
         }
-        new LoadProprieteAsyncTask(mProprieteAdapter, mCodeProjet).execute();
+        Log.e(TAG, "onStart: CALLING: " + mCodeProjet);
+        new LoadLotAsyncTask(mCodeProjet, mLotSpinner, mActivity, mProprieteAdapter).execute();
     }
 
     @Override
@@ -151,12 +154,12 @@ public class ProprieteListFragment extends Fragment {
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
+                        LotExpropriation lot = (LotExpropriation) parent.getItemAtPosition(0);
+                        Log.e(TAG, "onNothingSelected: " + lot.codeLotExpropriation );
+                        new LoadProprieteAsyncTask(proprieteAdapter, lot.codeLotExpropriation).execute();
                     }
                 });
             }
-
-
         }
 
         @Override

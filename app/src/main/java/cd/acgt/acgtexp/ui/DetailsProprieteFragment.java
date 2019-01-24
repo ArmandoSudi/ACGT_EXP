@@ -51,7 +51,7 @@ public class DetailsProprieteFragment extends Fragment {
     LitigeAdapter mLitigeAdapter;
     PaiementAdapter mPaiementAdapter;
 
-    long mCodePropriete;
+    int mCodePropriete;
     Propriete mPropriete;
     Activity mActivity;
 
@@ -66,10 +66,10 @@ public class DetailsProprieteFragment extends Fragment {
      * @return A new instance of fragment DetailsProprieteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailsProprieteFragment newInstance(long codePropriete) {
+    public static DetailsProprieteFragment newInstance(int codePropriete) {
         DetailsProprieteFragment fragment = new DetailsProprieteFragment();
         Bundle args = new Bundle();
-        args.putLong(Constant.KEY_CODE_PROPRIETE, codePropriete);
+        args.putInt(Constant.KEY_CODE_PROPRIETE, codePropriete);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,7 +79,7 @@ public class DetailsProprieteFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            mCodePropriete = getArguments().getLong(Constant.KEY_CODE_PROPRIETE);
+            mCodePropriete = getArguments().getInt(Constant.KEY_CODE_PROPRIETE);
         }
         mActivity = getActivity();
         mTypeProprieteAdapter = new TypeProprieteAdapter(mActivity);
@@ -139,9 +139,9 @@ public class DetailsProprieteFragment extends Fragment {
 
     class GetProprieteAsyncTask extends AsyncTask<Void, Void, Propriete> {
 
-        long mCodePropriete;
+        int mCodePropriete;
 
-        public GetProprieteAsyncTask(long mCodePropriete) {
+        public GetProprieteAsyncTask(int mCodePropriete) {
             this.mCodePropriete = mCodePropriete;
         }
 

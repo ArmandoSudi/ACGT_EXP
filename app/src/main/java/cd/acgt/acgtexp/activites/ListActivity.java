@@ -64,7 +64,6 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ListActivity.this, BaseAddActivity.class);
-
                 intent.putExtra(Constant.KEY_TYPE, Constant.PROPRIETE_TYPE);
                 intent.putExtra(Constant.KEY_CODE_PROJECT, mCodeProjet);
                 startActivity(intent);

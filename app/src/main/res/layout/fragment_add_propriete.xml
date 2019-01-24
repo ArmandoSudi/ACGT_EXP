@@ -7,32 +7,34 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DEDEDE"
+    android:background="#EEEEEE"
     android:padding="8dp"
     android:orientation="vertical"
     tools:context=".ui.AddProprieteFragment">
 
-    <TableLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
-        <TableRow
-            android:paddingTop="4dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Projet "
-                style="@style/body_style_two"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Projet "
+            style="@style/body_style_two"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:text="Autoroute Aeorport"
-                style="@style/body_style_one"/>
-        </TableRow>
-    </TableLayout>
+        <TextView
+            android:id="@+id/projet_designation_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Voici un tres llong texte qui fait office de titre pour le nom d'un projet qui n'existe pas"
+            style="@style/body_style_one"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,6 +61,7 @@
         android:id="@+id/pk_ti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:hint="PK de la propriete">
         <EditText
             android:id="@+id/pk_et"
@@ -101,7 +104,6 @@
 
     </LinearLayout>
 
-
     <ImageView
         android:id="@+id/selected_photo_iv"
         android:layout_width="match_parent"
@@ -111,60 +113,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_margin="8dp"
             android:text="Trouver les coordonness GPS de votre position"/>
 
-        <ImageButton
-            android:id="@+id/find_gps_bt"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:src="@drawable/ic_gps"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/find_gps_bt"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:src="@drawable/ic_gps"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/latitude_ti"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:hint="Latitude">
+
+                <EditText
+                    android:id="@+id/latitude_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="0.0"
+                    android:focusableInTouchMode="false"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/longitude_ti"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:hint="Longitude">
+
+                <EditText
+                    android:id="@+id/longitude_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="0.0"
+                    android:focusableInTouchMode="false"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/latitude_ti"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Latitude">
 
-            <EditText
-                android:id="@+id/latitude_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="0.0"
-                android:focusableInTouchMode="false"/>
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/longitude_ti"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Longitude">
 
-            <EditText
-                android:id="@+id/longitude_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="0.0"
-                android:focusableInTouchMode="false"/>
-        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
@@ -188,7 +201,6 @@
             android:textColor="#ffffff"
             android:text="Annuler"/>
     </LinearLayout>
-
 
 </LinearLayout>
 
